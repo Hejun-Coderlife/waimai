@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel数据处理工具 - 网页版</title>
+    <title>赫眉线上库存处理工具 - 网页版</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -12,7 +12,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ffeef0 0%, #fdf2f8 100%);
             min-height: 100vh; padding: 20px;
         }
         .container {
@@ -22,7 +22,7 @@
             min-height: calc(100vh - 40px);
         }
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
             color: white; padding: 30px; text-align: center;
         }
         .header h1 { font-size: 32px; font-weight: 600; margin-bottom: 10px; }
@@ -32,7 +32,7 @@
             margin-bottom: 30px; border: 2px dashed #cbd5e0;
             transition: all 0.3s;
         }
-        .upload-section:hover { border-color: #667eea; background: #f7fafc; }
+        .upload-section:hover { border-color: #ff9a9e; background: #f7fafc; }
         .file-input-group {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px; margin-bottom: 20px;
@@ -42,12 +42,12 @@
         .file-input { position: absolute; left: -9999px; }
         .file-input-button {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 12px 20px; background: #667eea; color: white;
+            padding: 12px 20px; background: #ff9a9e; color: white;
             border: none; border-radius: 8px; cursor: pointer;
             transition: all 0.3s; font-size: 14px; font-weight: 500;
             width: 100%; justify-content: center;
         }
-        .file-input-button:hover { background: #5568d3; transform: translateY(-2px); }
+        .file-input-button:hover { background: #ff8a8a; transform: translateY(-2px); }
         .file-name { margin-top: 8px; font-size: 12px; color: #666; word-break: break-all; }
         .file-name.has-file { color: #48bb78; font-weight: 500; }
         .process-section { text-align: center; margin: 40px 0; }
@@ -58,7 +58,7 @@
             gap: 10px; margin: 0 10px;
         }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .btn-primary { background: #667eea; color: white; }
+        .btn-primary { background: #ff9a9e; color: white; }
         .btn-success { background: #48bb78; color: white; }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .progress-section { margin: 30px 0; display: none; }
@@ -67,7 +67,7 @@
             border-radius: 10px; overflow: hidden; margin-bottom: 10px;
         }
         .progress-fill {
-            height: 100%; background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%; background: linear-gradient(90deg, #ff9a9e, #fecfef);
             width: 0%; transition: width 0.3s;
         }
         .progress-text { text-align: center; color: #666; font-size: 14px; }
@@ -106,15 +106,14 @@
         }
         .instructions li:before {
             content: "•"; position: absolute; left: 0;
-            color: #667eea; font-weight: bold;
+            color: #ff9a9e; font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Excel数据处理工具</h1>
-            <p>网页版 - 支持多文件批量处理和智能数据同步</p>
+            <h1>📊 赫眉线上库存处理工具</h1>
         </div>
         <div class="main-content">
             <div class="instructions">
@@ -1649,7 +1648,7 @@
 
         // 页面加载完成后的初始化
         document.addEventListener('DOMContentLoaded', function() {
-            log('📊 Excel数据处理工具已就绪', 'success');
+            log('📊 赫眉线上库存处理工具已就绪', 'success');
             log('请按顺序上传所需的9个Excel文件', 'info');
         });
     </script>
