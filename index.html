@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -681,7 +682,49 @@
             }
             
             log('已完成门店ID与商品条码的批量粘贴', 'success');
+            
+            // 添加价格匹配逻辑：通过D列条形码匹配美得得库存G列价格到K列
+            await matchPricesFromKucun(workbooks, dstData);
+            
             return dstData;
+        }
+
+        // 价格匹配函数：通过D列条形码匹配美得得库存G列价格到K列
+        async function matchPricesFromKucun(workbooks, dstData) {
+            log('开始价格匹配...', 'info');
+            
+            // 1. 建立美得得库存D列条形码到G列价格的映射关系
+            const kucunData = getSheetData(workbooks['kucun']);
+            const barcodeToPrice = {};
+            
+            for (let i = 1; i < kucunData.length; i++) { // 从第2行开始
+                const barcode = kucunData[i][3]; // D列（条形码）
+                const price = kucunData[i][6];   // G列（价格）
+                
+                if (barcode !== null && barcode !== undefined && String(barcode).trim() !== '') {
+                    barcodeToPrice[String(barcode).trim()] = price;
+                }
+            }
+            
+            log(`从美得得库存中建立了 ${Object.keys(barcodeToPrice).length} 个条形码到价格的映射`, 'info');
+            
+            // 2. 在门店与商品售卖信息中遍历D列条形码，匹配价格并填写到K列
+            let matchedCount = 0;
+            for (let i = 4; i < dstData.length; i++) { // 从第5行开始
+                const dstBarcode = dstData[i][3]; // D列（条形码）
+                
+                if (dstBarcode !== null && dstBarcode !== undefined && String(dstBarcode).trim() !== '') {
+                    const barcodeKey = String(dstBarcode).trim();
+                    const price = barcodeToPrice[barcodeKey];
+                    
+                    if (price !== null && price !== undefined) {
+                        dstData[i][10] = price; // K列（第11列）填写价格
+                        matchedCount++;
+                    }
+                }
+            }
+            
+            log(`已完成价格匹配：成功匹配了 ${matchedCount} 条价格记录到K列`, 'success');
         }
 
         // 4. 处理美得得库存（对应Python第84-130行）
