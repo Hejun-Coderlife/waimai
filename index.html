@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>库存处理工具</title>
+    <title>Inventory Processing Tool</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -113,113 +113,113 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 库存处理</h1>
+            <h1>📊 Inventory Processing</h1>
         </div>
         <div class="main-content">
             <div class="instructions">
-                <h3>💡 使用说明</h3>
+                <h3>💡 Instructions</h3>
                 <ul>
-                    <li>选择文件夹</li>
-                    <li>文件夹中的Excel文件需要以数字1-9开头命名</li>
-                    <li>系统将自动识别并匹配对应的文件类型</li>
-                    <li>处理完成后可下载结果文件</li>
-                    <li>支持大文件自动分割（超过行数限制时）</li>
+                    <li>Select a folder</li>
+                    <li>Excel files in the folder must be named starting with numbers 1-9</li>
+                    <li>The system will automatically identify and match file types</li>
+                    <li>Download result files after processing is complete</li>
+                    <li>Large files are automatically split (when row limit is exceeded)</li>
                 </ul>
             </div>
             <div class="upload-section">
-                <h2>📁 文件夹上传</h2>
+                <h2>📁 Folder Upload</h2>
                 <div style="text-align: center; margin-bottom: 20px;">
                     <input type="file" id="folderInput" webkitdirectory directory multiple style="display: none;" accept=".xlsx,.xls">
                     <button class="btn btn-primary" onclick="document.getElementById('folderInput').click()" style="font-size: 18px; padding: 20px 40px;">
-                        📂 选择包含Excel文件的文件夹
+                        📂 Select Folder Containing Excel Files
                     </button>
                     <div style="margin-top: 15px; color: #666; font-size: 14px;">
-                        请确保文件夹中的Excel文件以数字1-9开头命名（如：1美得得库存.xlsx, 2门店名.xlsx等）
+                        Please ensure Excel files in the folder are named starting with numbers 1-9 (e.g., 1Inventory.xlsx, 2StoreNames.xlsx, etc.)
                     </div>
                 </div>
                 
                 <div id="fileMapping" style="display: none;">
-                    <h3 style="margin-bottom: 15px; color: #2d3748;">📋 文件识别结果</h3>
+                    <h3 style="margin-bottom: 15px; color: #2d3748;">📋 File Recognition Results</h3>
                     <div class="file-mapping-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 15px;">
                         <div class="mapping-item" id="mapping-1" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600; color: #2d3748;">1️⃣ 美得得库存</div>
-                                    <div id="file-1-name" style="font-size: 12px; color: #666; margin-top: 5px;">未找到</div>
+                                    <div style="font-weight: 600; color: #2d3748;">1️⃣ Meidede Inventory</div>
+                                    <div id="file-1-name" style="font-size: 12px; color: #666; margin-top: 5px;">Not Found</div>
                                 </div>
-                                <div id="file-1-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">缺失</div>
+                                <div id="file-1-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">Missing</div>
                             </div>
                         </div>
                         <div class="mapping-item" id="mapping-2" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600; color: #2d3748;">2️⃣ 门店名</div>
-                                    <div id="file-2-name" style="font-size: 12px; color: #666; margin-top: 5px;">未找到</div>
+                                    <div style="font-weight: 600; color: #2d3748;">2️⃣ Store Names</div>
+                                    <div id="file-2-name" style="font-size: 12px; color: #666; margin-top: 5px;">Not Found</div>
                                 </div>
-                                <div id="file-2-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">缺失</div>
+                                <div id="file-2-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">Missing</div>
                             </div>
                         </div>
                         <div class="mapping-item" id="mapping-3" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600; color: #2d3748;">3️⃣ 美团商品库</div>
-                                    <div id="file-3-name" style="font-size: 12px; color: #666; margin-top: 5px;">未找到</div>
+                                    <div style="font-weight: 600; color: #2d3748;">3️⃣ Meituan Product Catalog</div>
+                                    <div id="file-3-name" style="font-size: 12px; color: #666; margin-top: 5px;">Not Found</div>
                                 </div>
-                                <div id="file-3-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">缺失</div>
+                                <div id="file-3-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">Missing</div>
                             </div>
                         </div>
                         <div class="mapping-item" id="mapping-4" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600; color: #2d3748;">4️⃣ 门店与商品售卖信息</div>
-                                    <div id="file-4-name" style="font-size: 12px; color: #666; margin-top: 5px;">未找到</div>
+                                    <div style="font-weight: 600; color: #2d3748;">4️⃣ Store & Product Sales Info</div>
+                                    <div id="file-4-name" style="font-size: 12px; color: #666; margin-top: 5px;">Not Found</div>
                                 </div>
-                                <div id="file-4-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">缺失</div>
+                                <div id="file-4-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">Missing</div>
                             </div>
                         </div>
                         <div class="mapping-item" id="mapping-5" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600; color: #2d3748;">5️⃣ 饿了么</div>
-                                    <div id="file-5-name" style="font-size: 12px; color: #666; margin-top: 5px;">未找到</div>
+                                    <div style="font-weight: 600; color: #2d3748;">5️⃣ Eleme</div>
+                                    <div id="file-5-name" style="font-size: 12px; color: #666; margin-top: 5px;">Not Found</div>
                                 </div>
-                                <div id="file-5-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">缺失</div>
+                                <div id="file-5-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">Missing</div>
                             </div>
                         </div>
                         <div class="mapping-item" id="mapping-6" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600; color: #2d3748;">6️⃣ 饿了么商品库</div>
-                                    <div id="file-6-name" style="font-size: 12px; color: #666; margin-top: 5px;">未找到</div>
+                                    <div style="font-weight: 600; color: #2d3748;">6️⃣ Eleme Product Catalog</div>
+                                    <div id="file-6-name" style="font-size: 12px; color: #666; margin-top: 5px;">Not Found</div>
                                 </div>
-                                <div id="file-6-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">缺失</div>
+                                <div id="file-6-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">Missing</div>
                             </div>
                         </div>
                         <div class="mapping-item" id="mapping-7" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600; color: #2d3748;">7️⃣ 抖音提货券</div>
-                                    <div id="file-7-name" style="font-size: 12px; color: #666; margin-top: 5px;">未找到</div>
+                                    <div style="font-weight: 600; color: #2d3748;">7️⃣ Douyin Pickup Voucher</div>
+                                    <div id="file-7-name" style="font-size: 12px; color: #666; margin-top: 5px;">Not Found</div>
                                 </div>
-                                <div id="file-7-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">缺失</div>
+                                <div id="file-7-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">Missing</div>
                             </div>
                         </div>
                         <div class="mapping-item" id="mapping-8" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600; color: #2d3748;">8️⃣ 京东外卖模版</div>
-                                    <div id="file-8-name" style="font-size: 12px; color: #666; margin-top: 5px;">未找到</div>
+                                    <div style="font-weight: 600; color: #2d3748;">8️⃣ JD Takeout Template</div>
+                                    <div id="file-8-name" style="font-size: 12px; color: #666; margin-top: 5px;">Not Found</div>
                                 </div>
-                                <div id="file-8-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">缺失</div>
+                                <div id="file-8-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">Missing</div>
                             </div>
                         </div>
                         <div class="mapping-item" id="mapping-9" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600; color: #2d3748;">9️⃣ 京东外卖商品库</div>
-                                    <div id="file-9-name" style="font-size: 12px; color: #666; margin-top: 5px;">未找到</div>
+                                    <div style="font-weight: 600; color: #2d3748;">9️⃣ JD Takeout Product Catalog</div>
+                                    <div id="file-9-name" style="font-size: 12px; color: #666; margin-top: 5px;">Not Found</div>
                                 </div>
-                                <div id="file-9-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">缺失</div>
+                                <div id="file-9-status" style="padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #f56565; color: white;">Missing</div>
                             </div>
                         </div>
                     </div>
@@ -227,88 +227,88 @@
                 
                 <div class="file-input-group" style="display: none;">
                     <div class="file-input-item">
-                        <label>美得得库存.xlsx</label>
-                        <input type="file" class="file-input" id="kucun" accept=".xlsx">
-                        <button class="file-input-button" onclick="document.getElementById('kucun').click()">📊 选择文件</button>
-                        <div class="file-name" id="kucun-name"></div>
+                        <label>Meidede_Inventory.xlsx</label>
+                        <input type="file" class="file-input" id="inventory" accept=".xlsx">
+                        <button class="file-input-button" onclick="document.getElementById('inventory').click()">📊 Select File</button>
+                        <div class="file-name" id="inventory-name"></div>
                     </div>
                     <div class="file-input-item">
-                        <label>门店名.xlsx</label>
-                        <input type="file" class="file-input" id="mendian" accept=".xlsx">
-                        <button class="file-input-button" onclick="document.getElementById('mendian').click()">🏪 选择文件</button>
-                        <div class="file-name" id="mendian-name"></div>
+                        <label>Store_Names.xlsx</label>
+                        <input type="file" class="file-input" id="stores" accept=".xlsx">
+                        <button class="file-input-button" onclick="document.getElementById('stores').click()">🏪 Select File</button>
+                        <div class="file-name" id="stores-name"></div>
                     </div>
                     <div class="file-input-item">
-                        <label>美团商品库.xlsx</label>
+                        <label>Meituan_Product_Catalog.xlsx</label>
                         <input type="file" class="file-input" id="mtwm-goods" accept=".xlsx">
-                        <button class="file-input-button" onclick="document.getElementById('mtwm-goods').click()">🛒 选择文件</button>
+                        <button class="file-input-button" onclick="document.getElementById('mtwm-goods').click()">🛒 Select File</button>
                         <div class="file-name" id="mtwm-goods-name"></div>
                     </div>
                     <div class="file-input-item">
-                        <label>门店与商品售卖信息.xlsx</label>
+                        <label>Store_Product_Sales_Info.xlsx</label>
                         <input type="file" class="file-input" id="dst" accept=".xlsx">
-                        <button class="file-input-button" onclick="document.getElementById('dst').click()">📋 选择文件</button>
+                        <button class="file-input-button" onclick="document.getElementById('dst').click()">📋 Select File</button>
                         <div class="file-name" id="dst-name"></div>
                     </div>
                     <div class="file-input-item">
-                        <label>饿了么.xlsx</label>
+                        <label>Eleme.xlsx</label>
                         <input type="file" class="file-input" id="eleme" accept=".xlsx">
-                        <button class="file-input-button" onclick="document.getElementById('eleme').click()">🍜 选择文件</button>
+                        <button class="file-input-button" onclick="document.getElementById('eleme').click()">🍜 Select File</button>
                         <div class="file-name" id="eleme-name"></div>
                     </div>
                     <div class="file-input-item">
-                        <label>饿了么商品库.xlsx</label>
+                        <label>Eleme_Product_Catalog.xlsx</label>
                         <input type="file" class="file-input" id="eleme-goods" accept=".xlsx">
-                        <button class="file-input-button" onclick="document.getElementById('eleme-goods').click()">🛍️ 选择文件</button>
+                        <button class="file-input-button" onclick="document.getElementById('eleme-goods').click()">🛍️ Select File</button>
                         <div class="file-name" id="eleme-goods-name"></div>
                     </div>
                     <div class="file-input-item">
-                        <label>抖音提货券.xlsx</label>
+                        <label>Douyin_Pickup_Voucher.xlsx</label>
                         <input type="file" class="file-input" id="douyin" accept=".xlsx">
-                        <button class="file-input-button" onclick="document.getElementById('douyin').click()">🎵 选择文件</button>
+                        <button class="file-input-button" onclick="document.getElementById('douyin').click()">🎵 Select File</button>
                         <div class="file-name" id="douyin-name"></div>
                     </div>
                     <div class="file-input-item">
-                        <label>京东外卖模版.xlsx</label>
+                        <label>JD_Takeout_Template.xlsx</label>
                         <input type="file" class="file-input" id="jd-template" accept=".xlsx">
-                        <button class="file-input-button" onclick="document.getElementById('jd-template').click()">🛒 选择文件</button>
+                        <button class="file-input-button" onclick="document.getElementById('jd-template').click()">🛒 Select File</button>
                         <div class="file-name" id="jd-template-name"></div>
                     </div>
                     <div class="file-input-item">
-                        <label>京东外卖商品库.xlsx</label>
+                        <label>JD_Takeout_Product_Catalog.xlsx</label>
                         <input type="file" class="file-input" id="jd-goods" accept=".xlsx">
-                        <button class="file-input-button" onclick="document.getElementById('jd-goods').click()">📦 选择文件</button>
+                        <button class="file-input-button" onclick="document.getElementById('jd-goods').click()">📦 Select File</button>
                         <div class="file-name" id="jd-goods-name"></div>
                     </div>
                 </div>
             </div>
             <div class="process-section">
-                <button class="btn btn-primary" onclick="processFiles()" id="processBtn">🚀 开始处理</button>
-                <button class="btn btn-success" onclick="downloadAllAsZip()" id="downloadAllBtn" style="display: none;">📦 打包下载全部</button>
+                <button class="btn btn-primary" onclick="processFiles()" id="processBtn">🚀 Start Processing</button>
+                <button class="btn btn-success" onclick="downloadAllAsZip()" id="downloadAllBtn" style="display: none;">📦 Download All as ZIP</button>
             </div>
             <div class="progress-section" id="progressSection">
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
-                <div class="progress-text" id="progressText">准备开始处理...</div>
+                <div class="progress-text" id="progressText">Preparing to process...</div>
             </div>
             <div class="results-section" id="resultsSection">
-                <h3>📋 处理结果</h3>
+                <h3>📋 Processing Results</h3>
                 <div class="download-list" id="downloadList"></div>
             </div>
             <div class="log-section" id="logSection">
-                <h3>📝 处理日志</h3>
+                <h3>📝 Processing Log</h3>
                 <div class="log-container" id="logContainer"></div>
             </div>
         </div>
     </div>
     <script>
-        // 全局变量
+        // Global variables
         let uploadedFiles = {};
         let processedFiles = {};
         let fileMapping = {
-            '1': 'kucun',
-            '2': 'mendian', 
+            '1': 'inventory',
+            '2': 'stores',
             '3': 'mtwm-goods',
             '4': 'dst',
             '5': 'eleme',
@@ -318,70 +318,70 @@
             '9': 'jd-goods'
         };
         let fileNames = {
-            '1': '美得得库存',
-            '2': '门店名',
-            '3': '美团商品库', 
-            '4': '门店与商品售卖信息',
-            '5': '饿了么',
-            '6': '饿了么商品库',
-            '7': '抖音提货券',
-            '8': '京东外卖模版',
-            '9': '京东外卖商品库'
+            '1': 'Meidede Inventory',
+            '2': 'Store Names',
+            '3': 'Meituan Product Catalog', 
+            '4': 'Store & Product Sales Info',
+            '5': 'Eleme',
+            '6': 'Eleme Product Catalog',
+            '7': 'Douyin Pickup Voucher',
+            '8': 'JD Takeout Template',
+            '9': 'JD Takeout Product Catalog'
         };
 
-        // 文件夹上传监听器
+        // Folder upload listener
         document.getElementById('folderInput').addEventListener('change', function(e) {
             const files = Array.from(e.target.files);
-            log(`📂 选择了文件夹，包含 ${files.length} 个文件`, 'info');
+            log(`📂 Selected folder containing ${files.length} files`, 'info');
             
-            // 重置文件映射显示
+            // Reset file mapping display
             resetFileMapping();
             
-            // 处理文件
+            // Process files
             files.forEach(file => {
                 if (file.name.toLowerCase().endsWith('.xlsx') || file.name.toLowerCase().endsWith('.xls')) {
                     const firstChar = file.name.charAt(0);
                     if (fileMapping[firstChar]) {
                         uploadedFiles[fileMapping[firstChar]] = file;
                         updateFileMapping(firstChar, file.name);
-                        log(`✅ 识别文件: ${file.name} → ${fileNames[firstChar]}`, 'success');
+                        log(`✅ File recognized: ${file.name} → ${fileNames[firstChar]}`, 'success');
                     } else {
-                        log(`⚠️ 无法识别文件: ${file.name} (文件名不是以1-9开头)`, 'warning');
+                        log(`⚠️ Cannot recognize file: ${file.name} (filename does not start with 1-9)`, 'warning');
                     }
                 }
             });
             
-            // 显示文件映射结果
+            // Show file mapping results
             document.getElementById('fileMapping').style.display = 'block';
             
-            // 检查是否所有必需文件都已上传
+            // Check if all required files have been uploaded
             const missingFiles = Object.keys(fileMapping).filter(num => !uploadedFiles[fileMapping[num]]);
             if (missingFiles.length === 0) {
-                log('✅ 所有必需文件已找到，可以开始处理', 'success');
+                log('✅ All required files found, ready to process', 'success');
             } else {
-                log(`⚠️ 缺少文件: ${missingFiles.map(num => fileNames[num]).join(', ')}`, 'warning');
+                log(`⚠️ Missing files: ${missingFiles.map(num => fileNames[num]).join(', ')}`, 'warning');
             }
         });
 
-        // 重置文件映射显示
+        // Reset file mapping display
         function resetFileMapping() {
             for (let i = 1; i <= 9; i++) {
-                document.getElementById(`file-${i}-name`).textContent = '未找到';
-                document.getElementById(`file-${i}-status`).textContent = '缺失';
+                document.getElementById(`file-${i}-name`).textContent = 'Not Found';
+                document.getElementById(`file-${i}-status`).textContent = 'Missing';
                 document.getElementById(`file-${i}-status`).style.background = '#f56565';
                 document.getElementById(`mapping-${i}`).style.borderColor = '#e2e8f0';
             }
         }
 
-        // 更新文件映射显示
+        // Update file mapping display
         function updateFileMapping(number, fileName) {
             document.getElementById(`file-${number}-name`).textContent = fileName;
-            document.getElementById(`file-${number}-status`).textContent = '已找到';
+            document.getElementById(`file-${number}-status`).textContent = 'Found';
             document.getElementById(`file-${number}-status`).style.background = '#48bb78';
             document.getElementById(`mapping-${number}`).style.borderColor = '#48bb78';
         }
 
-        // 日志函数
+        // Log function
         function log(message, type = 'info') {
             const logContainer = document.getElementById('logContainer');
             const logSection = document.getElementById('logSection');
@@ -393,25 +393,25 @@
             logSection.style.display = 'block';
         }
 
-        // 更新进度
+        // Update progress
         function updateProgress(percent, text) {
             document.getElementById('progressFill').style.width = percent + '%';
             document.getElementById('progressText').textContent = text;
         }
 
-        // 显示进度条
+        // Show progress bar
         function showProgress() {
             document.getElementById('progressSection').style.display = 'block';
             document.getElementById('processBtn').disabled = true;
         }
 
-        // 隐藏进度条
+        // Hide progress bar
         function hideProgress() {
             document.getElementById('progressSection').style.display = 'none';
             document.getElementById('processBtn').disabled = false;
         }
 
-        // 读取Excel文件 - 改进版本，提高兼容性
+        // Read Excel file - improved version with better compatibility
         function readExcelFile(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -419,7 +419,7 @@
                     try {
                         const data = new Uint8Array(e.target.result);
                         
-                        // 使用更宽松的读取选项提高兼容性
+                        // Use more lenient read options for better compatibility
                         const workbook = XLSX.read(data, {
                             type: 'array',
                             cellDates: false,
@@ -438,7 +438,7 @@
                         
                         resolve(workbook);
                     } catch (error) {
-                        log(`读取文件 ${file.name} 时出错: ${error.message}`, 'error');
+                        log(`Error reading file ${file.name}: ${error.message}`, 'error');
                         reject(error);
                     }
                 };
@@ -447,7 +447,7 @@
             });
         }
 
-        // 创建工作簿
+        // Create workbook
         function createWorkbook(data, sheetName = 'Sheet1') {
             const wb = XLSX.utils.book_new();
             const ws = XLSX.utils.aoa_to_sheet(data);
@@ -455,20 +455,20 @@
             return wb;
         }
 
-        // 获取工作表数据 - 改进版本，确保读取所有列
+        // Get sheet data - improved version, ensures all columns are read
         function getSheetData(workbook, sheetName = null) {
             const sheet = sheetName ? workbook.Sheets[sheetName] : workbook.Sheets[workbook.SheetNames[0]];
             
-            // 获取工作表范围
+            // Get worksheet range
             let range = XLSX.utils.decode_range(sheet['!ref']);
             
-            // 强制扩展范围，确保至少读取到第10列
+            // Force extend range to ensure at least 10 columns are read
             range.e.c = Math.max(range.e.c, 10);
             
-            // 重新设置范围
+            // Reset range
             sheet['!ref'] = XLSX.utils.encode_range(range);
             
-            // 使用更可靠的方法读取数据
+            // Use more reliable method to read data
             const data = [];
             for (let row = range.s.r; row <= range.e.r; row++) {
                 const rowData = [];
@@ -483,7 +483,7 @@
             return data;
         }
 
-        // 下载文件
+        // Download file
         function downloadFile(workbook, filename) {
             const wbout = XLSX.write(workbook, {bookType: 'xlsx', type: 'array'});
             const blob = new Blob([wbout], {type: 'application/octet-stream'});
@@ -495,7 +495,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // 添加下载项到结果列表
+        // Add download item to results list
         function addDownloadItem(filename, workbook) {
             const downloadList = document.getElementById('downloadList');
             const item = document.createElement('div');
@@ -508,505 +508,504 @@
             item.innerHTML = `
                 <div class="file-info">
                     <div class="file-name">${filename}</div>
-                    <div class="file-size">大小: ${size}</div>
+                    <div class="file-size">Size: ${size}</div>
                 </div>
-                <button class="download-btn" onclick="downloadFile(processedFiles['${filename}'], '${filename}')">下载</button>
+                <button class="download-btn" onclick="downloadFile(processedFiles['${filename}'], '${filename}')">Download</button>
             `;
             
             downloadList.appendChild(item);
             processedFiles[filename] = workbook;
         }
 
-        // 主要处理函数 - 按照Python逻辑完整实现
+        // Main processing function - fully implemented following Python logic
         async function processFiles() {
             const missingFiles = Object.keys(fileMapping).filter(num => !uploadedFiles[fileMapping[num]]);
             if (missingFiles.length > 0) {
                 const missingFileNames = missingFiles.map(num => fileNames[num]);
-                alert(`请先上传所有必需的文件！\n缺少的文件：${missingFileNames.join(', ')}`);
+                alert(`Please upload all required files first!\nMissing files: ${missingFileNames.join(', ')}`);
                 return;
             }
 
             showProgress();
-            log('🚀 开始处理Excel文件...', 'info');
+            log('🚀 Starting Excel file processing...', 'info');
 
             try {
-                updateProgress(5, '正在读取Excel文件...');
+                updateProgress(5, 'Reading Excel files...');
                 const workbooks = {};
                 for (const [id, file] of Object.entries(uploadedFiles)) {
-                    log(`读取文件: ${file.name}`, 'info');
+                    log(`Reading file: ${file.name}`, 'info');
                     workbooks[id] = await readExcelFile(file);
                 }
 
-                updateProgress(10, '处理门店数据...');
+                updateProgress(10, 'Processing store data...');
                 const storeData = await processStoreData(workbooks);
 
-                updateProgress(15, '处理商品数据...');
+                updateProgress(15, 'Processing product data...');
                 const goodsData = await processGoodsData(workbooks);
 
-                updateProgress(20, '处理门店与商品售卖信息...');
+                updateProgress(20, 'Processing store & product sales info...');
                 const dstData = await processDstData(workbooks, storeData, goodsData);
 
-                updateProgress(30, '处理美得得库存数据...');
-                const kucunData = await processKucunData(workbooks, storeData);
+                updateProgress(30, 'Processing Meidede inventory data...');
+                const inventoryData = await processInventoryData(workbooks, storeData);
 
-                updateProgress(35, '标记U列...');
-                const markedKucunData = await markUColumn(workbooks, goodsData, kucunData);
+                updateProgress(35, 'Marking column U...');
+                const markedInventoryData = await markUColumn(workbooks, goodsData, inventoryData);
 
-                updateProgress(40, '同步库存数据...');
-                const finalDstData = await syncInventoryData(workbooks, storeData, dstData, markedKucunData);
+                updateProgress(40, 'Syncing inventory data...');
+                const finalDstData = await syncInventoryData(workbooks, storeData, dstData, markedInventoryData);
 
-                updateProgress(50, '处理饿了么数据...');
-                const elemeData = await processElemeData(workbooks, storeData, markedKucunData);
+                updateProgress(50, 'Processing Eleme data...');
+                const elemeData = await processElemeData(workbooks, storeData, markedInventoryData);
 
-                updateProgress(55, '检查饿了么文件分割...');
+                updateProgress(55, 'Checking Eleme file split...');
                 await checkAndSplitElemeFile(elemeData);
 
-                updateProgress(60, '处理抖音提货券数据...');
-                const douyinData = await processDouyinData(workbooks, storeData, markedKucunData);
+                updateProgress(60, 'Processing Douyin pickup voucher data...');
+                const douyinData = await processDouyinData(workbooks, storeData, markedInventoryData);
 
-                updateProgress(65, '处理抖音提货券与美得得库存对比...');
-                const finalKucunData = await processDouyinComparison(workbooks, storeData, markedKucunData);
+                updateProgress(65, 'Comparing Douyin voucher with Meidede inventory...');
+                const finalInventoryData = await processDouyinComparison(workbooks, storeData, markedInventoryData);
 
-                updateProgress(70, '处理京东外卖数据...');
-                const jdResult = await processJdData(workbooks, storeData, finalKucunData);
+                updateProgress(70, 'Processing JD takeout data...');
+                const jdResult = await processJdData(workbooks, storeData, finalInventoryData);
 
-                updateProgress(75, '检查京东外卖模版文件分割...');
+                updateProgress(75, 'Checking JD takeout template file split...');
                 await checkAndSplitJdTemplateFile(jdResult.jdTemplateData);
 
-                updateProgress(85, '生成结果文件...');
+                updateProgress(85, 'Generating result files...');
                 await generateResultFiles(workbooks, {
                     storeData,
                     goodsData,
                     dstData: finalDstData,
-                    kucunData: finalKucunData,
+                    inventoryData: finalInventoryData,
                     elemeData,
                     douyinData,
                     jdResult
                 });
 
-                updateProgress(100, '处理完成！');
-                log('✅ 所有文件处理完成！', 'success');
+                updateProgress(100, 'Processing complete!');
+                log('✅ All files processed successfully!', 'success');
 
                 document.getElementById('resultsSection').style.display = 'block';
                 document.getElementById('downloadAllBtn').style.display = 'inline-flex';
                 hideProgress();
 
             } catch (error) {
-                log(`❌ 处理过程中出现错误: ${error.message}`, 'error');
-                console.error('处理错误:', error);
+                log(`❌ Error during processing: ${error.message}`, 'error');
+                console.error('Processing error:', error);
                 hideProgress();
             }
         }
 
-        // 1. 读取门店ID（对应Python第31-38行）
+        // 1. Read store IDs (corresponds to Python lines 31-38)
         async function processStoreData(workbooks) {
-            log('处理门店数据...', 'info');
-            const mendianData = getSheetData(workbooks['mendian']);
+            log('Processing store data...', 'info');
+            const storeTable = getSheetData(workbooks['stores']);
             
-            const mendianIds = [];
-            // 从第2行开始，读取C列（第3列）
-            for (let i = 1; i < mendianData.length; i++) {
-                const val = mendianData[i][2]; // C列
+            const storeIds = [];
+            // Start from row 2, read column C (3rd column)
+            for (let i = 1; i < storeTable.length; i++) {
+                const val = storeTable[i][2]; // Column C
                 if (val !== null && val !== undefined && String(val).trim() !== '') {
-                    mendianIds.push(String(val).trim());
+                    storeIds.push(String(val).trim());
                 }
             }
             
-            log(`找到 ${mendianIds.length} 个门店ID`, 'success');
-            return { mendianIds, mendianData };
+            log(`Found ${storeIds.length} store IDs`, 'success');
+            return { storeIds, storeTable };
         }
 
-        // 2. 读取美团商品库B列（从B3开始），并同步E、K、A、T列（对应Python第40-61行）
+        // 2. Read Meituan product catalog column B (from B3), sync columns E, K, A, T (corresponds to Python lines 40-61)
         async function processGoodsData(workbooks) {
-            log('处理商品数据...', 'info');
+            log('Processing product data...', 'info');
             const goodsData = getSheetData(workbooks['mtwm-goods']);
             const goodsInfo = [];
             
-            // 从第3行开始，适应实际文件结构
+            // Start from row 3, adapt to actual file structure
             for (let i = 2; i < goodsData.length; i++) {
-                const bVal = goodsData[i][1];  // B列（条码）
-                const eVal = goodsData[i][4];  // E列（可能为空）
-                const oVal = goodsData[i][10]; // K列（可能为空）
-                const aVal = goodsData[i][0];  // A列（sku_id）
-                const tVal = goodsData[i][19]; // T列（可能为空）
+                const bVal = goodsData[i][1];  // Column B (barcode)
+                const eVal = goodsData[i][4];  // Column E (may be empty)
+                const oVal = goodsData[i][10]; // Column K (may be empty)
+                const aVal = goodsData[i][0];  // Column A (sku_id)
+                const tVal = goodsData[i][19]; // Column T (may be empty)
                 
-                // 检查B列是否有有效条码数据
+                // Check if column B has valid barcode data
                 if (bVal !== null && bVal !== undefined && 
                     String(bVal).trim() !== '' && 
-                    !String(bVal).includes('条形码为国家编码网收录的条码') &&
-                    !String(bVal).includes('条形码') && // 排除标题行
-                    String(bVal).trim().length >= 8) { // 确保是有效的条码长度
+                    !String(bVal).includes('barcode') &&
+                    String(bVal).trim().length >= 8) { // Ensure valid barcode length
                     
                     goodsInfo.push({
                         barcode: String(bVal).trim(),
-                        e_col: eVal || '', // 如果E列为空，使用空字符串
-                        o_col: oVal || '', // 如果K列为空，使用空字符串
-                        a_col: aVal || '', // A列数据
-                        t_col: tVal || ''  // 如果T列为空，使用空字符串
+                        e_col: eVal || '', // If column E is empty, use empty string
+                        o_col: oVal || '', // If column K is empty, use empty string
+                        a_col: aVal || '', // Column A data
+                        t_col: tVal || ''  // If column T is empty, use empty string
                     });
                 }
             }
             
-            log(`找到 ${goodsInfo.length} 个商品信息`, 'success');
+            log(`Found ${goodsInfo.length} product entries`, 'success');
             return goodsInfo;
         }
 
-        // 3. 处理门店与商品售卖信息（对应Python第63-82行）
+        // 3. Process store & product sales info (corresponds to Python lines 63-82)
         async function processDstData(workbooks, storeData, goodsData) {
-            log('处理门店与商品售卖信息...', 'info');
+            log('Processing store & product sales info...', 'info');
             const dstData = getSheetData(workbooks['dst']);
             
-            // 从D5开始粘贴，实现笛卡尔积
-            let rowIdx = 5; // 从第5行开始（索引为4）
+            // Start pasting from D5, implement Cartesian product
+            let rowIdx = 5; // Start from row 5 (index 4)
             
-            for (const mendianId of storeData.mendianIds) {
+            for (const storeId of storeData.storeIds) {
                 for (const info of goodsData) {
-                    // 确保行存在，如果不够就扩展
+                    // Ensure row exists, extend if needed
                     while (dstData.length <= rowIdx - 1) {
-                        dstData.push(new Array(20).fill('')); // 扩展足够的列
+                        dstData.push(new Array(20).fill('')); // Extend with enough columns
                     }
                     
-                    dstData[rowIdx - 1][0] = mendianId;           // A列写门店ID
-                    dstData[rowIdx - 1][3] = info.barcode;        // D列写条码
-                    dstData[rowIdx - 1][1] = info.e_col;          // B列写美团商品库E列
-                    dstData[rowIdx - 1][2] = info.o_col;          // C列写美团商品库K列
-                    dstData[rowIdx - 1][4] = info.a_col;          // E列写美团商品库A列
-                    // J列不再填写（Python注释掉了）
+                    dstData[rowIdx - 1][0] = storeId;           // Column A: store ID
+                    dstData[rowIdx - 1][3] = info.barcode;        // Column D: barcode
+                    dstData[rowIdx - 1][1] = info.e_col;          // Column B: Meituan catalog column E
+                    dstData[rowIdx - 1][2] = info.o_col;          // Column C: Meituan catalog column K
+                    dstData[rowIdx - 1][4] = info.a_col;          // Column E: Meituan catalog column A
+                    // Column J no longer filled (commented out in Python)
                     
-                    if (info.barcode) {  // D列有内容
-                        dstData[rowIdx - 1][5] = 0;              // F列写0
+                    if (info.barcode) {  // If column D has content
+                        dstData[rowIdx - 1][5] = 0;              // Column F: write 0
                     }
                     rowIdx++;
                 }
             }
             
-            log('已完成门店ID与商品条码的批量粘贴', 'success');
+            log('Completed batch paste of store IDs and product barcodes', 'success');
             
-            // 添加价格匹配逻辑：通过D列条形码匹配美得得库存G列价格到K列
+            // Add price matching logic: match Meidede inventory column G prices to column K via column D barcodes
             await matchPricesFromKucun(workbooks, dstData);
             
             return dstData;
         }
 
-        // 价格匹配函数：通过D列条形码匹配美得得库存G列价格到K列
+        // Price matching function: match Meidede inventory column G prices to column K via column D barcodes
         async function matchPricesFromKucun(workbooks, dstData) {
-            log('开始价格匹配...', 'info');
+            log('Starting price matching...', 'info');
             
-            // 1. 建立美得得库存D列条形码到G列价格的映射关系
-            const kucunData = getSheetData(workbooks['kucun']);
+            // 1. Build mapping from Meidede inventory column D barcodes to column G prices
+            const inventoryData = getSheetData(workbooks['inventory']);
             const barcodeToPrice = {};
             
-            for (let i = 1; i < kucunData.length; i++) { // 从第2行开始
-                const barcode = kucunData[i][3]; // D列（条形码）
-                const price = kucunData[i][6];   // G列（价格）
+            for (let i = 1; i < inventoryData.length; i++) { // Start from row 2
+                const barcode = inventoryData[i][3]; // Column D (barcode)
+                const price = inventoryData[i][6];   // Column G (price)
                 
                 if (barcode !== null && barcode !== undefined && String(barcode).trim() !== '') {
                     barcodeToPrice[String(barcode).trim()] = price;
                 }
             }
             
-            log(`从美得得库存中建立了 ${Object.keys(barcodeToPrice).length} 个条形码到价格的映射`, 'info');
+            log(`Built ${Object.keys(barcodeToPrice).length} barcode-to-price mappings from Meidede inventory`, 'info');
             
-            // 2. 在门店与商品售卖信息中遍历D列条形码，匹配价格并填写到K列
+            // 2. Iterate column D barcodes in store & product sales info, match prices and fill column K
             let matchedCount = 0;
-            for (let i = 4; i < dstData.length; i++) { // 从第5行开始
-                const dstBarcode = dstData[i][3]; // D列（条形码）
+            for (let i = 4; i < dstData.length; i++) { // Start from row 5
+                const dstBarcode = dstData[i][3]; // Column D (barcode)
                 
                 if (dstBarcode !== null && dstBarcode !== undefined && String(dstBarcode).trim() !== '') {
                     const barcodeKey = String(dstBarcode).trim();
                     const price = barcodeToPrice[barcodeKey];
                     
                     if (price !== null && price !== undefined) {
-                        dstData[i][10] = price; // K列（第11列）填写价格
+                        dstData[i][10] = price; // Column K (11th column): fill price
                         matchedCount++;
                     }
                 }
             }
             
-            log(`已完成价格匹配：成功匹配了 ${matchedCount} 条价格记录到K列`, 'success');
+            log(`Price matching complete: successfully matched ${matchedCount} price records to column K`, 'success');
         }
 
-        // 4. 处理美得得库存（对应Python第84-130行）
-        async function processKucunData(workbooks, storeData) {
-            log('处理美得得库存数据...', 'info');
-            const kucunData = getSheetData(workbooks['kucun']);
-            const processedKucunData = kucunData.map(row => [...row]);
+        // 4. Process Meidede inventory (corresponds to Python lines 84-130)
+        async function processInventoryData(workbooks, storeData) {
+            log('Processing Meidede inventory data...', 'info');
+            const rawInventoryData = getSheetData(workbooks['inventory']);
+            const processedInventoryData = rawInventoryData.map(row => [...row]);
             
-            // 建立"门店名"B列到A列和D列的映射
+            // Build mapping from "Store Names" column B to columns A and D
             const bToA = {};
             const bToD = {};
-            for (let i = 1; i < storeData.mendianData.length; i++) {
-                const mendianA = storeData.mendianData[i][0];  // A列
-                const mendianB = storeData.mendianData[i][1];  // B列
-                const mendianD = storeData.mendianData[i][3];  // D列
-                const key = mendianB !== null ? String(mendianB).trim() : '';
+            for (let i = 1; i < storeData.storeTable.length; i++) {
+                const storeColA = storeData.storeTable[i][0];  // Column A
+                const storeColB = storeData.storeTable[i][1];  // Column B
+                const storeColD = storeData.storeTable[i][3];  // Column D
+                const key = storeColB !== null ? String(storeColB).trim() : '';
                 if (key) {
-                    bToA[key] = mendianA;
-                    bToD[key] = mendianD;
+                    bToA[key] = storeColA;
+                    bToD[key] = storeColD;
                 }
             }
             
-            // 设置V2、W2单元格标题
-            if (processedKucunData.length > 1) {
-                processedKucunData[1][21] = '美团店名'; // V列
-                processedKucunData[1][22] = '饿了么';    // W列
+            // Set V2, W2 cell headers
+            if (processedInventoryData.length > 1) {
+                processedInventoryData[1][21] = 'Meituan Store'; // Column V
+                processedInventoryData[1][22] = 'Eleme';          // Column W
             }
             
-            // 在V、W列写新名字，A列内容不变
-            for (let i = 1; i < processedKucunData.length; i++) {
-                const cell = processedKucunData[i][0]; // A列
+            // Write new names in columns V, W, column A content unchanged
+            for (let i = 1; i < processedInventoryData.length; i++) {
+                const cell = processedInventoryData[i][0]; // Column A
                 const key = cell !== null ? String(cell).trim() : '';
                 
                 if (key && bToA[key]) {
-                    processedKucunData[i][21] = bToA[key]; // V列
+                    processedInventoryData[i][21] = bToA[key]; // Column V
                 }
                 if (key && bToD[key]) {
-                    processedKucunData[i][22] = bToD[key]; // W列
+                    processedInventoryData[i][22] = bToD[key]; // Column W
                 }
             }
             
-            log('已生成新表格并完成A列替换', 'success');
-            return processedKucunData;
+            log('Generated new table and completed column A replacement', 'success');
+            return processedInventoryData;
         }
 
-        // 5. 对比美得得库存D列和商品库B列，在U列标记（对应Python第132-158行）
-        async function markUColumn(workbooks, goodsData, kucunData) {
-            log('标记U列...', 'info');
+        // 5. Compare Meidede inventory column D with product catalog column B, mark in column U (corresponds to Python lines 132-158)
+        async function markUColumn(workbooks, goodsData, inventoryData) {
+            log('Marking column U...', 'info');
             
-            // 获取商品库所有条码
+            // Get all product catalog barcodes
             const goodsBarcodesSet = new Set();
             for (const info of goodsData) {
                 goodsBarcodesSet.add(info.barcode);
             }
             
-            // 设置U列标题
-            if (kucunData.length > 1) {
-                kucunData[1][20] = '美团外卖/饿了么'; // U列
+            // Set column U header
+            if (inventoryData.length > 1) {
+                inventoryData[1][20] = 'Meituan/Eleme'; // Column U
             }
             
-            // 遍历D列，从第2行开始
-            for (let i = 1; i < kucunData.length; i++) {
-                const dVal = kucunData[i][3]; // D列
+            // Iterate column D, starting from row 2
+            for (let i = 1; i < inventoryData.length; i++) {
+                const dVal = inventoryData[i][3]; // Column D
                 if (dVal !== null && goodsBarcodesSet.has(String(dVal).trim())) {
-                    kucunData[i][20] = '有'; // U列
+                    inventoryData[i][20] = 'Yes'; // Column U
                 }
             }
             
-            log('已完成U列标记', 'success');
-            return kucunData;
+            log('Column U marking complete', 'success');
+            return inventoryData;
         }
 
 
-        // 6. 库存同步逻辑（对应Python第160-240行）
-        async function syncInventoryData(workbooks, storeData, dstData, kucunData) {
-            log('同步库存数据...', 'info');
+        // 6. Inventory sync logic (corresponds to Python lines 160-240)
+        async function syncInventoryData(workbooks, storeData, dstData, inventoryData) {
+            log('Syncing inventory data...', 'info');
             
-            // 1. 读取"门店名"A列->C列（门店名->门店ID）映射
-            const mendianNameToId = {};
-            for (let i = 1; i < storeData.mendianData.length; i++) {
-                const name = storeData.mendianData[i][0];  // A列
-                const id = storeData.mendianData[i][2];    // C列
+            // 1. Read "Store Names" column A->C (store name->store ID) mapping
+            const storeNameToId = {};
+            for (let i = 1; i < storeData.storeTable.length; i++) {
+                const name = storeData.storeTable[i][0];  // Column A
+                const id = storeData.storeTable[i][2];    // Column C
                 if (name !== null && String(name).trim() !== '' && id !== null) {
-                    mendianNameToId[String(name).trim()] = String(id).trim();
+                    storeNameToId[String(name).trim()] = String(id).trim();
                 }
             }
             
-            // 2. 读取"门店与商品售卖信息"所有行，建立(门店ID, 条码)到行号的映射
+            // 2. Read all rows from "Store & Product Sales Info", build (store ID, barcode) to row mapping
             const dstIdBarcodeToRow = {};
-            for (let i = 4; i < dstData.length; i++) { // 从第5行开始
-                const dstId = dstData[i][0];    // A列
-                const dstBarcode = dstData[i][3]; // D列
+            for (let i = 4; i < dstData.length; i++) { // Start from row 5
+                const dstId = dstData[i][0];    // Column A
+                const dstBarcode = dstData[i][3]; // Column D
                 if (dstId !== null && dstBarcode !== null) {
                     const key = `${String(dstId).trim()}_${String(dstBarcode).trim()}`;
-                    dstIdBarcodeToRow[key] = i; // 存储行索引
+                    dstIdBarcodeToRow[key] = i; // Store row index
                 }
             }
             
-            // 3. 遍历美得得库存，U列为"有"的行
+            // 3. Iterate Meidede inventory, rows where column U is "Yes"
             let syncCount = 0;
-            for (let i = 1; i < kucunData.length; i++) {
-                const uVal = kucunData[i][20]; // U列
-                if (uVal === '有') {
-                    const kucunMendian = kucunData[i][21]; // V列（门店名）
-                    const kucunBarcode = kucunData[i][3];  // D列（条码）
-                    const kucunKucun = kucunData[i][7];    // H列（库存数量）
+            for (let i = 1; i < inventoryData.length; i++) {
+                const uVal = inventoryData[i][20]; // Column U
+                if (uVal === 'Yes') {
+                    const inventoryStoreName = inventoryData[i][21]; // Column V (store name)
+                    const inventoryBarcode = inventoryData[i][3];  // Column D (barcode)
+                    const inventoryQty = inventoryData[i][7];    // Column H (inventory quantity)
                     
-                    if (kucunMendian === null || kucunBarcode === null) {
+                    if (inventoryStoreName === null || inventoryBarcode === null) {
                         continue;
                     }
                     
-                    const mendianId = mendianNameToId[String(kucunMendian).trim()];
-                    if (!mendianId) {
+                    const storeId = storeNameToId[String(inventoryStoreName).trim()];
+                    if (!storeId) {
                         continue;
                     }
                     
-                    // 查找"门店与商品售卖信息"中对应的行
-                    const key = `${mendianId}_${String(kucunBarcode).trim()}`;
+                    // Find corresponding row in "Store & Product Sales Info"
+                    const key = `${storeId}_${String(inventoryBarcode).trim()}`;
                     const dstRowIdx = dstIdBarcodeToRow[key];
                     if (dstRowIdx !== undefined) {
-                        dstData[dstRowIdx][11] = kucunKucun; // L列（第12列）
+                        dstData[dstRowIdx][11] = inventoryQty; // Column L (12th column)
                         syncCount++;
                     }
                 }
             }
             
-            log(`已完成库存数量同步到门店与商品售卖信息L列，同步了 ${syncCount} 条记录`, 'success');
+            log(`Inventory sync to Store & Product Sales Info column L complete, synced ${syncCount} records`, 'success');
             
-            // 4. 遍历"门店与商品售卖信息"，D列有内容但L列没有的，在L列标记为"0"
+            // 4. Iterate "Store & Product Sales Info", fill "0" in column L where column D has content but column L is empty
             let zeroFillCount = 0;
-            for (let i = 4; i < dstData.length; i++) { // 从第5行开始
-                const dVal = dstData[i][3];  // D列
-                const lVal = dstData[i][11]; // L列
+            for (let i = 4; i < dstData.length; i++) { // Start from row 5
+                const dVal = dstData[i][3];  // Column D
+                const lVal = dstData[i][11]; // Column L
                 if (dVal !== null && String(dVal).trim() !== '' && 
                     (lVal === null || lVal === undefined || String(lVal).trim() === '')) {
-                    dstData[i][11] = 0; // L列写0
+                    dstData[i][11] = 0; // Column L: write 0
                     zeroFillCount++;
                 }
             }
-            log(`已完成L列空缺补零，补零了 ${zeroFillCount} 条记录`, 'success');
+            log(`Column L empty fill complete, filled ${zeroFillCount} records with zero`, 'success');
             
-            // 5. 将"门店与商品售卖信息"L列小于0的都改成0
+            // 5. Change all negative values in "Store & Product Sales Info" column L to 0
             let negativeCount = 0;
-            for (let i = 4; i < dstData.length; i++) { // 从第5行开始
-                const lVal = dstData[i][11]; // L列
+            for (let i = 4; i < dstData.length; i++) { // Start from row 5
+                const lVal = dstData[i][11]; // Column L
                 try {
                     if (lVal !== null && lVal !== undefined && String(lVal).trim() !== '' && parseFloat(lVal) < 0) {
                         dstData[i][11] = 0;
                         negativeCount++;
                     }
                 } catch (e) {
-                    // 如果不是数字，跳过
+                    // If not a number, skip
                 }
             }
-            log(`已完成L列小于0的数值归零，归零了 ${negativeCount} 条记录`, 'success');
+            log(`Column L negative values zeroed, zeroed ${negativeCount} records`, 'success');
             
-            // 6. 如果L列库存数据为0，F列填写为1
+            // 6. If column L inventory is 0, fill column F with 1
             let fColumnFillCount = 0;
-            for (let i = 4; i < dstData.length; i++) { // 从第5行开始
-                const lVal = dstData[i][11]; // L列（库存数量）
+            for (let i = 4; i < dstData.length; i++) { // Start from row 5
+                const lVal = dstData[i][11]; // Column L (inventory quantity)
                 try {
                     if (lVal !== null && lVal !== undefined && String(lVal).trim() !== '' && parseFloat(lVal) === 0) {
-                        dstData[i][5] = 1; // F列写1
+                        dstData[i][5] = 1; // Column F: write 1
                         fColumnFillCount++;
                     }
                 } catch (e) {
-                    // 如果不是数字，跳过
+                    // If not a number, skip
                 }
             }
-            log(`已完成L列库存为0时F列填写1的处理，处理了 ${fColumnFillCount} 条记录`, 'success');
+            log(`Column F fill when column L inventory is 0 complete, processed ${fColumnFillCount} records`, 'success');
             
-            // 7. 如果A列有内容但C列没有内容，在C列填写"个"
+            // 7. If column A has content but column C is empty, fill "pcs" in column C
             let unitFillCount = 0;
-            for (let i = 4; i < dstData.length; i++) { // 从第5行开始
-                const aVal = dstData[i][0]; // A列（门店ID）
-                const cVal = dstData[i][2]; // C列
+            for (let i = 4; i < dstData.length; i++) { // Start from row 5
+                const aVal = dstData[i][0]; // Column A (store ID)
+                const cVal = dstData[i][2]; // Column C
                 
                 if (aVal !== null && String(aVal).trim() !== '' && 
                     (cVal === null || cVal === undefined || String(cVal).trim() === '')) {
-                    dstData[i][2] = '个'; // C列填写"个"
+                    dstData[i][2] = 'pcs'; // Column C: fill "pcs"
                     unitFillCount++;
                 }
             }
-            log(`已完成C列空缺填充，填充了 ${unitFillCount} 条记录`, 'success');
+            log(`Column C empty fill complete, filled ${unitFillCount} records`, 'success');
             
             return dstData;
         }
 
-        // 7. 饿了么数据处理（对应Python第242-378行）
-        async function processElemeData(workbooks, storeData, kucunData) {
-            log('处理饿了么数据...', 'info');
+        // 7. Eleme data processing (corresponds to Python lines 242-378)
+        async function processElemeData(workbooks, storeData, inventoryData) {
+            log('Processing Eleme data...', 'info');
             
-            // 读取饿了么门店ID（E列，第5列）
+            // Read Eleme store IDs (column E, 5th column)
             const elemeIds = [];
-            for (let i = 1; i < storeData.mendianData.length; i++) {
-                const val = storeData.mendianData[i][4]; // E列
+            for (let i = 1; i < storeData.storeTable.length; i++) {
+                const val = storeData.storeTable[i][4]; // Column E
                 if (val !== null && val !== undefined && String(val).trim() !== '') {
                     elemeIds.push(String(val).trim());
                 }
             }
             
-            // 读取饿了么商品库数据
+            // Read Eleme product catalog data
             const elemeGoodsData = getSheetData(workbooks['eleme-goods']);
             const barcodes = [];
             const eColVals = [];
             
-            // 从饿了么商品库读取条码（A列，从A2开始）
+            // Read barcodes from Eleme product catalog (column A, from A2)
             for (let i = 1; i < elemeGoodsData.length; i++) {
-                const bVal = elemeGoodsData[i][0]; // A列
+                const bVal = elemeGoodsData[i][0]; // Column A
                 barcodes.push(bVal !== null ? String(bVal).trim() : '');
             }
             
-            // 从饿了么商品库读取B列内容（从B2开始）
+            // Read column B content from Eleme product catalog (from B2)
             for (let i = 1; i < elemeGoodsData.length; i++) {
-                const eVal = elemeGoodsData[i][1]; // B列
+                const eVal = elemeGoodsData[i][1]; // Column B
                 eColVals.push(eVal !== null ? String(eVal).trim() : '');
             }
             
-            // 获取饿了么表格数据并扩展
+            // Get Eleme table data and extend
             const elemeData = getSheetData(workbooks['eleme']);
             
-            // 从第3行开始批量写入
-            let rowIdx = 3; // 从第3行开始（索引为2）
+            // Start batch writing from row 3
+            let rowIdx = 3; // Start from row 3 (index 2)
             
             for (const elemeId of elemeIds) {
                 for (let i = 0; i < barcodes.length; i++) {
-                    // 确保行存在
+                    // Ensure row exists
                     while (elemeData.length <= rowIdx - 1) {
-                        elemeData.push(new Array(15).fill('')); // 扩展足够的列
+                        elemeData.push(new Array(15).fill('')); // Extend with enough columns
                     }
                     
-                    elemeData[rowIdx - 1][0] = elemeId;           // A列：门店ID
-                    elemeData[rowIdx - 1][2] = barcodes[i];       // C列：条码
-                    elemeData[rowIdx - 1][3] = eColVals[i];       // D列：饿了么商品库B列内容
+                    elemeData[rowIdx - 1][0] = elemeId;           // Column A: store ID
+                    elemeData[rowIdx - 1][2] = barcodes[i];       // Column C: barcode
+                    elemeData[rowIdx - 1][3] = eColVals[i];       // Column D: Eleme catalog column B content
                     rowIdx++;
                 }
             }
             
-            log(`已将商品库内容批量复制到饿了么表格，生成了 ${rowIdx - 3} 行数据`, 'success');
+            log(`Batch copied product catalog to Eleme table, generated ${rowIdx - 3} rows of data`, 'success');
             
-            // 同步美得得库存到饿了么H列，并A列有内容的J列写"上架"
-            await syncElemeInventory(elemeData, storeData, kucunData);
+            // Sync Meidede inventory to Eleme column H, write "Listed" in column J for rows with column A content
+            await syncElemeInventory(elemeData, storeData, inventoryData);
             
-            // 根据饿了么A列门店ID，从门店名表获取D列内容填写到饿了么B列
+            // Based on Eleme column A store ID, get column D content from Store Names and fill Eleme column B
             await fillElemeStoreNames(elemeData, storeData);
             
-            // 识别H列库存为"0"时，在J列填写"下架"
+            // When column H inventory is "0", fill "Delisted" in column J
             await markElemeOffline(elemeData);
             
             return elemeData;
         }
 
-        // 同步美得得库存到饿了么H列
-        async function syncElemeInventory(elemeData, storeData, kucunData) {
-            log('同步库存到饿了么表格...', 'info');
+        // Sync Meidede inventory to Eleme column H
+        async function syncElemeInventory(elemeData, storeData, inventoryData) {
+            log('Syncing inventory to Eleme table...', 'info');
             
-            // 1. 用"门店名.xlsx"D列（饿了么店名）和E列（饿了么ID）建立映射
+            // 1. Build mapping using "Store Names.xlsx" column D (Eleme store name) and column E (Eleme ID)
             const elemeNameToId = {};
-            for (let i = 1; i < storeData.mendianData.length; i++) {
-                const elemeName = storeData.mendianData[i][3]; // D列（饿了么店名）
-                const elemeId = storeData.mendianData[i][4];   // E列（饿了么门店ID）
+            for (let i = 1; i < storeData.storeTable.length; i++) {
+                const elemeName = storeData.storeTable[i][3]; // Column D (Eleme store name)
+                const elemeId = storeData.storeTable[i][4];   // Column E (Eleme store ID)
                 if (elemeName !== null && String(elemeName).trim() !== '' && elemeId !== null) {
                     elemeNameToId[String(elemeName).trim()] = String(elemeId).trim();
                 }
             }
             
-            // 2. 在"饿了么.xlsx"中，建立(门店ID, 条码)到行的映射
+            // 2. In "Eleme.xlsx", build (store ID, barcode) to row mapping
             const elemeIdBarcodeToRow = {};
-            for (let i = 2; i < elemeData.length; i++) { // 从第3行开始
-                const elemeId = elemeData[i][0];    // A列（饿了么门店ID）
-                const elemeBarcode = elemeData[i][2]; // C列（条码）
+            for (let i = 2; i < elemeData.length; i++) { // Start from row 3
+                const elemeId = elemeData[i][0];    // Column A (Eleme store ID)
+                const elemeBarcode = elemeData[i][2]; // Column C (barcode)
                 if (elemeId !== null && elemeBarcode !== null) {
                     const key = `${String(elemeId).trim()}_${String(elemeBarcode).trim()}`;
-                    elemeIdBarcodeToRow[key] = i; // 存储行索引
+                    elemeIdBarcodeToRow[key] = i; // Store row index
                 }
             }
             
-            // 3. 遍历所有行，写入库存到"饿了么.xlsx"H列（对应Python第312-325行）
+            // 3. Iterate all rows, write inventory to "Eleme.xlsx" column H (corresponds to Python lines 312-325)
             let syncCount = 0;
-            for (let i = 1; i < kucunData.length; i++) {
-                const elemeName = kucunData[i][22]; // W列（第23列，饿了么店名）
-                const barcode = kucunData[i][3];    // D列（第4列，条码）
-                const kucunKucun = kucunData[i][7]; // H列（第8列，库存数量）
+            for (let i = 1; i < inventoryData.length; i++) {
+                const elemeName = inventoryData[i][22]; // Column W (23rd column, Eleme store name)
+                const barcode = inventoryData[i][3];    // Column D (4th column, barcode)
+                const inventoryQty = inventoryData[i][7]; // Column H (8th column, inventory quantity)
                 
                 if (elemeName === null || barcode === null) {
                     continue;
@@ -1020,636 +1019,636 @@
                 const key = `${elemeId}_${String(barcode).trim()}`;
                 const elemeRowIdx = elemeIdBarcodeToRow[key];
                 if (elemeRowIdx !== undefined) {
-                    elemeData[elemeRowIdx][7] = kucunKucun; // H列（第8列）
+                    elemeData[elemeRowIdx][7] = inventoryQty; // Column H (8th column)
                     syncCount++;
                 }
             }
             
-            log(`已完成库存同步到饿了么H列，同步了 ${syncCount} 条记录`, 'success');
+            log(`Inventory sync to Eleme column H complete, synced ${syncCount} records`, 'success');
             
-            // 4. A列有内容的，J列写"上架"
-            for (let i = 2; i < elemeData.length; i++) { // 从第3行开始
-                const aVal = elemeData[i][0]; // A列
+            // 4. For rows with column A content, write "Listed" in column J
+            for (let i = 2; i < elemeData.length; i++) { // Start from row 3
+                const aVal = elemeData[i][0]; // Column A
                 if (aVal !== null && String(aVal).trim() !== '') {
-                    elemeData[i][9] = '上架'; // J列（第10列）
+                    elemeData[i][9] = 'Listed'; // Column J (10th column)
                 }
             }
             
-            // 5. 只有A列有内容的，H列才要补0
-            for (let i = 2; i < elemeData.length; i++) { // 从第3行开始
-                const aVal = elemeData[i][0]; // A列
-                const hVal = elemeData[i][7]; // H列
+            // 5. Only fill 0 in column H for rows with column A content
+            for (let i = 2; i < elemeData.length; i++) { // Start from row 3
+                const aVal = elemeData[i][0]; // Column A
+                const hVal = elemeData[i][7]; // Column H
                 if (aVal !== null && String(aVal).trim() !== '') {
                     if (hVal === null || hVal === undefined || String(hVal).trim() === '') {
-                        elemeData[i][7] = 0; // H列写0
+                        elemeData[i][7] = 0; // Column H: write 0
                     }
                 }
             }
             
-            log('已完成饿了么表格H列空缺补零（仅A列有内容的行）', 'success');
+            log('Eleme table column H empty fill complete (only for rows with column A content)', 'success');
         }
 
-        // 根据饿了么A列门店ID填写B列店名
+        // Fill Eleme column B store name based on column A store ID
         async function fillElemeStoreNames(elemeData, storeData) {
-            log('填写饿了么店名...', 'info');
+            log('Filling Eleme store names...', 'info');
             
-            // 1. 建立"门店名.xlsx"E列（饿了么门店ID）到D列（饿了么店名）的映射
+            // 1. Build mapping from "Store Names.xlsx" column E (Eleme store ID) to column D (Eleme store name)
             const elemeIdToName = {};
-            for (let i = 1; i < storeData.mendianData.length; i++) {
-                const elemeId = storeData.mendianData[i][4];    // E列（饿了么门店ID）
-                const elemeName = storeData.mendianData[i][3];  // D列（饿了么店名）
+            for (let i = 1; i < storeData.storeTable.length; i++) {
+                const elemeId = storeData.storeTable[i][4];    // Column E (Eleme store ID)
+                const elemeName = storeData.storeTable[i][3];  // Column D (Eleme store name)
                 if (elemeId !== null && String(elemeId).trim() !== '' && elemeName !== null) {
                     elemeIdToName[String(elemeId).trim()] = String(elemeName).trim();
                 }
             }
             
-            // 2. 遍历"饿了么.xlsx"，根据A列门店ID填写B列
-            for (let i = 2; i < elemeData.length; i++) { // 从第3行开始
-                const elemeId = elemeData[i][0]; // A列（饿了么门店ID）
+            // 2. Iterate "Eleme.xlsx", fill column B based on column A store ID
+            for (let i = 2; i < elemeData.length; i++) { // Start from row 3
+                const elemeId = elemeData[i][0]; // Column A (Eleme store ID)
                 if (elemeId !== null && String(elemeId).trim() in elemeIdToName) {
                     const elemeName = elemeIdToName[String(elemeId).trim()];
-                    elemeData[i][1] = elemeName; // B列填写饿了么店名
+                    elemeData[i][1] = elemeName; // Column B: fill Eleme store name
                 }
             }
             
-            log('已完成饿了么A列门店ID对应店名填写到B列', 'success');
+            log('Eleme column A store ID to column B store name fill complete', 'success');
         }
 
-        // 识别H列库存为"0"时，在J列填写"下架"
+        // When column H inventory is "0", fill "Delisted" in column J
         async function markElemeOffline(elemeData) {
-            log('标记饿了么下架商品...', 'info');
+            log('Marking Eleme delisted products...', 'info');
             
-            for (let i = 2; i < elemeData.length; i++) { // 从第3行开始
-                const hVal = elemeData[i][7]; // H列（库存数量）
+            for (let i = 2; i < elemeData.length; i++) { // Start from row 3
+                const hVal = elemeData[i][7]; // Column H (inventory quantity)
                 if (hVal !== null && String(hVal).trim() === '0') {
-                    elemeData[i][9] = '下架'; // J列填写"下架"
+                    elemeData[i][9] = 'Delisted'; // Column J: fill "Delisted"
                 }
             }
             
-            log('已完成饿了么H列库存为0的商品在J列标记为下架', 'success');
+            log('Eleme column H inventory 0 products marked as delisted in column J', 'success');
         }
 
-        // 8. 抖音提货券处理（对应Python第380-559行）
-        async function processDouyinData(workbooks, storeData, kucunData) {
-            log('处理抖音提货券数据...', 'info');
+        // 8. Douyin pickup voucher processing (corresponds to Python lines 380-559)
+        async function processDouyinData(workbooks, storeData, inventoryData) {
+            log('Processing Douyin pickup voucher data...', 'info');
             
-            // 复制抖音提货券数据
+            // Copy Douyin pickup voucher data
             const douyinData = getSheetData(workbooks['douyin']);
             const processedDouyinData = douyinData.map(row => [...row]);
             
-            // 建立"门店名.xlsx"F列（抖音ID）到B列（美得得门店名）的映射
-            const douyinIdToMendianName = {};
-            for (let i = 1; i < storeData.mendianData.length; i++) {
-                const mendianName = storeData.mendianData[i][1]; // B列（美得得门店名）
-                const douyinId = storeData.mendianData[i][5];     // F列（抖音ID）
-                if (douyinId !== null && String(douyinId).trim() !== '' && mendianName !== null) {
-                    douyinIdToMendianName[String(douyinId).trim()] = String(mendianName).trim();
+            // Build mapping from "Store Names.xlsx" column F (Douyin ID) to column B (Meidede store name)
+            const douyinIdToStoreName = {};
+            for (let i = 1; i < storeData.storeTable.length; i++) {
+                const storeName = storeData.storeTable[i][1]; // Column B (Meidede store name)
+                const douyinId = storeData.storeTable[i][5];     // Column F (Douyin ID)
+                if (douyinId !== null && String(douyinId).trim() !== '' && storeName !== null) {
+                    douyinIdToStoreName[String(douyinId).trim()] = String(storeName).trim();
                 }
             }
             
-            // 建立"美得得库存"中(仓库名称, 商品条码)到库存数量的映射（对应Python第399-408行）
-            // 注意：Python版本使用的是原始库存文件，不是处理后的文件
-            const originalKucunData = getSheetData(workbooks['kucun']);
-            const kucunMap = {};
+            // Build mapping from "Meidede Inventory" (warehouse name, product barcode) to inventory quantity (corresponds to Python lines 399-408)
+            // Note: Python version uses the original inventory file, not the processed file
+            const originalKucunData = getSheetData(workbooks['inventory']);
+            const inventoryMap = {};
             for (let i = 1; i < originalKucunData.length; i++) {
-                const warehouseName = originalKucunData[i][0];  // A列（仓库名称）
-                const barcode = originalKucunData[i][3];         // D列（商品条码）
-                const stockCount = originalKucunData[i][7];      // H列（库存总数）
+                const warehouseName = originalKucunData[i][0];  // Column A (warehouse name)
+                const barcode = originalKucunData[i][3];         // Column D (product barcode)
+                const stockCount = originalKucunData[i][7];      // Column H (total inventory)
                 if (warehouseName !== null && barcode !== null) {
                     const key = `${String(warehouseName).trim()}_${String(barcode).trim()}`;
-                    kucunMap[key] = stockCount !== null ? stockCount : 0;
+                    inventoryMap[key] = stockCount !== null ? stockCount : 0;
                 }
             }
             
-            // 处理抖音提货券数据
+            // Process Douyin pickup voucher data
             let processedCount = 0;
-            for (let i = 1; i < processedDouyinData.length; i++) { // 假设从第2行开始有数据
-                const poiId = processedDouyinData[i][5];      // F列（POIID）
-                const merchantCode = processedDouyinData[i][4]; // E列（商家编码）
-                const douyinStock = processedDouyinData[i][7];  // H列（导出时可售库存数量）
+            for (let i = 1; i < processedDouyinData.length; i++) { // Assume data starts from row 2
+                const poiId = processedDouyinData[i][5];      // Column F (POIID)
+                const merchantCode = processedDouyinData[i][4]; // Column E (merchant code)
+                const douyinStock = processedDouyinData[i][7];  // Column H (available inventory at export)
                 
                 if (poiId === null || merchantCode === null) {
                     continue;
                 }
                 
-                // 根据POIID找到美得得门店名
-                const mendianName = douyinIdToMendianName[String(poiId).trim()];
-                if (!mendianName) {
+                // Find Meidede store name by POIID
+                const storeName = douyinIdToStoreName[String(poiId).trim()];
+                if (!storeName) {
                     continue;
                 }
                 
-                // 根据美得得门店名和商家编码找到库存数量
-                const key = `${mendianName}_${String(merchantCode).trim()}`;
-                const kucunStock = kucunMap[key] || 0;
+                // Find inventory quantity by Meidede store name and merchant code
+                const key = `${storeName}_${String(merchantCode).trim()}`;
+                const inventoryStock = inventoryMap[key] || 0;
                 
-                // 计算库存差异
-                let kucunStockNum = kucunStock === null ? 0 : parseFloat(kucunStock);
+                // Calculate inventory difference
+                let inventoryStockNum = inventoryStock === null ? 0 : parseFloat(inventoryStock);
                 let douyinStockNum = douyinStock === null ? 0 : parseFloat(douyinStock);
                 
                 try {
-                    const difference = kucunStockNum - douyinStockNum;
+                    const difference = inventoryStockNum - douyinStockNum;
                     
-                    // 根据差异填写I列和J列
+                    // Fill columns I and J based on difference
                     if (difference > 0) {
-                        processedDouyinData[i][8] = '增';  // I列
-                        processedDouyinData[i][9] = difference;  // J列（库存变更数量）
+                        processedDouyinData[i][8] = 'Add';  // Column I
+                        processedDouyinData[i][9] = difference;  // Column J (inventory change quantity)
                         processedCount++;
                     } else if (difference < 0) {
-                        processedDouyinData[i][8] = '减';  // I列
-                        processedDouyinData[i][9] = Math.abs(difference);  // J列（取绝对值）
+                        processedDouyinData[i][8] = 'Reduce';  // Column I
+                        processedDouyinData[i][9] = Math.abs(difference);  // Column J (absolute value)
                         processedCount++;
                     }
-                    // 如果difference == 0，不做任何填写
+                    // If difference == 0, don't fill anything
                     
                 } catch (e) {
-                    // 如果转换数字失败，跳过这一行
+                    // If number conversion fails, skip this row
                     continue;
                 }
             }
             
-            log(`已完成抖音提货券处理，处理了 ${processedCount} 条库存差异记录`, 'success');
+            log(`Douyin pickup voucher processing complete, processed ${processedCount} inventory difference records`, 'success');
             return processedDouyinData;
         }
 
-        // 9. 抖音提货券与美得得库存对比处理（对应Python第455-559行）
-        async function processDouyinComparison(workbooks, storeData, kucunData) {
-            log('处理抖音提货券与美得得库存对比...', 'info');
+        // 9. Douyin pickup voucher vs Meidede inventory comparison processing (corresponds to Python lines 455-559)
+        async function processDouyinComparison(workbooks, storeData, inventoryData) {
+            log('Processing Douyin voucher vs Meidede inventory comparison...', 'info');
             
-            // 1. 在"美得得库存_处理结果"的X2单元格填写"抖音"，Y2单元格填写"抖音门店"
-            if (kucunData.length > 1) {
-                kucunData[1][23] = '抖音';     // X列（第24列）
-                kucunData[1][24] = '抖音门店'; // Y列（第25列）
+            // 1. Fill "Douyin" in X2 cell and "Douyin Store" in Y2 cell of "Meidede Inventory_Processed"
+            if (inventoryData.length > 1) {
+                inventoryData[1][23] = 'Douyin';       // Column X (24th column)
+                inventoryData[1][24] = 'Douyin Store'; // Column Y (25th column)
             }
             
-            // 2. 建立"门店名"F列（抖音ID）到B列（美得得店名）的映射
-            const douyinIdToMendianName = {};
-            for (let i = 1; i < storeData.mendianData.length; i++) {
-                const mendianName = storeData.mendianData[i][1]; // B列（美得得店名）
-                const douyinId = storeData.mendianData[i][5];     // F列（抖音ID）
-                if (douyinId !== null && String(douyinId).trim() !== '' && mendianName !== null) {
-                    douyinIdToMendianName[String(douyinId).trim()] = String(mendianName).trim();
+            // 2. Build mapping from "Store Names" column F (Douyin ID) to column B (Meidede store name)
+            const douyinIdToStoreName = {};
+            for (let i = 1; i < storeData.storeTable.length; i++) {
+                const storeName = storeData.storeTable[i][1]; // Column B (Meidede store name)
+                const douyinId = storeData.storeTable[i][5];     // Column F (Douyin ID)
+                if (douyinId !== null && String(douyinId).trim() !== '' && storeName !== null) {
+                    douyinIdToStoreName[String(douyinId).trim()] = String(storeName).trim();
                 }
             }
             
-            // 3. 建立"门店名"B列（美得得店名）到G列的映射
-            const mendianNameToGCol = {};
-            for (let i = 1; i < storeData.mendianData.length; i++) {
-                const mendianName = storeData.mendianData[i][1]; // B列（美得得店名）
-                const gColVal = storeData.mendianData[i][6];     // G列
-                if (mendianName !== null && String(mendianName).trim() !== '') {
-                    mendianNameToGCol[String(mendianName).trim()] = gColVal;
+            // 3. Build mapping from "Store Names" column B (Meidede store name) to column G
+            const storeNameToGCol = {};
+            for (let i = 1; i < storeData.storeTable.length; i++) {
+                const storeName = storeData.storeTable[i][1]; // Column B (Meidede store name)
+                const gColVal = storeData.storeTable[i][6];     // Column G
+                if (storeName !== null && String(storeName).trim() !== '') {
+                    storeNameToGCol[String(storeName).trim()] = gColVal;
                 }
             }
             
-            // 4. 读取"抖音提货券"数据
+            // 4. Read "Douyin Pickup Voucher" data
             const douyinData = getSheetData(workbooks['douyin']);
             
-            // 5. 建立"美得得库存"中(仓库名称, 商品条码)的集合，用于快速查找（对应Python第509-516行）
-            // 注意：Python版本使用的是原始库存文件，不是处理后的文件
-            const originalKucunData = getSheetData(workbooks['kucun']);
-            const kucunBarcodeSet = new Set();
+            // 5. Build set of (warehouse name, product barcode) from "Meidede Inventory" for fast lookup (corresponds to Python lines 509-516)
+            // Note: Python version uses the original inventory file, not the processed file
+            const originalKucunData = getSheetData(workbooks['inventory']);
+            const inventoryBarcodeSet = new Set();
             for (let i = 1; i < originalKucunData.length; i++) {
-                const warehouseName = originalKucunData[i][0];  // A列（仓库名称）
-                const barcode = originalKucunData[i][3];         // D列（商品条码）
+                const warehouseName = originalKucunData[i][0];  // Column A (warehouse name)
+                const barcode = originalKucunData[i][3];         // Column D (product barcode)
                 if (warehouseName !== null && barcode !== null) {
                     const key = `${String(warehouseName).trim()}_${String(barcode).trim()}`;
-                    kucunBarcodeSet.add(key);
+                    inventoryBarcodeSet.add(key);
                 }
             }
             
-            // 6. 处理抖音提货券数据，对比美得得库存
+            // 6. Process Douyin pickup voucher data, compare with Meidede inventory
             let matchCount = 0;
-            for (let i = 1; i < douyinData.length; i++) { // 假设从第2行开始有数据
-                const poiId = douyinData[i][5];      // F列（POIID）
-                const merchantCode = douyinData[i][4]; // E列（商家编码）
+            for (let i = 1; i < douyinData.length; i++) { // Assume data starts from row 2
+                const poiId = douyinData[i][5];      // Column F (POIID)
+                const merchantCode = douyinData[i][4]; // Column E (merchant code)
                 
                 if (poiId === null || merchantCode === null) {
                     continue;
                 }
                 
-                // 根据POIID找到美得得门店名
-                const mendianName = douyinIdToMendianName[String(poiId).trim()];
-                if (!mendianName) {
+                // Find Meidede store name by POIID
+                const storeName = douyinIdToStoreName[String(poiId).trim()];
+                if (!storeName) {
                     continue;
                 }
                 
-                // 检查是否存在重复的商品条码
-                const key = `${mendianName}_${String(merchantCode).trim()}`;
-                if (kucunBarcodeSet.has(key)) {
+                // Check if duplicate product barcode exists
+                const key = `${storeName}_${String(merchantCode).trim()}`;
+                if (inventoryBarcodeSet.has(key)) {
                     matchCount++;
                     
-                    // 找到重复，在"美得得库存_处理结果"中标记
-                    for (let j = 1; j < kucunData.length; j++) {
-                        const kucunWarehouse = kucunData[j][0]; // A列（仓库名称）
-                        const kucunBarcode = kucunData[j][3];    // D列（商品条码）
+                    // Found duplicate, mark in "Meidede Inventory_Processed"
+                    for (let j = 1; j < inventoryData.length; j++) {
+                        const inventoryWarehouse = inventoryData[j][0]; // Column A (warehouse name)
+                        const inventoryBarcode = inventoryData[j][3];    // Column D (product barcode)
                         
-                        if (kucunWarehouse !== null && kucunBarcode !== null &&
-                            String(kucunWarehouse).trim() === mendianName &&
-                            String(kucunBarcode).trim() === String(merchantCode).trim()) {
+                        if (inventoryWarehouse !== null && inventoryBarcode !== null &&
+                            String(inventoryWarehouse).trim() === storeName &&
+                            String(inventoryBarcode).trim() === String(merchantCode).trim()) {
                             
-                            // 标记X列为"有"
-                            kucunData[j][23] = '有'; // X列
+                            // Mark column X as "Yes"
+                            inventoryData[j][23] = 'Yes'; // Column X
                             
-                            // 标记Y列为门店名G列的内容
-                            const gColContent = mendianNameToGCol[mendianName] || '';
-                            kucunData[j][24] = gColContent; // Y列
+                            // Mark column Y with Store Names column G content
+                            const gColContent = storeNameToGCol[storeName] || '';
+                            inventoryData[j][24] = gColContent; // Column Y
                             break;
                         }
                     }
                 }
             }
             
-            log(`已完成抖音提货券与美得得库存对比处理，标记了 ${matchCount} 个重复商品`, 'success');
-            return kucunData;
+            log(`Douyin voucher vs Meidede inventory comparison complete, marked ${matchCount} duplicate products`, 'success');
+            return inventoryData;
         }
 
-        // 9. 京东外卖处理（对应Python第640-911行）
-        async function processJdData(workbooks, storeData, kucunData) {
-            log('处理京东外卖数据...', 'info');
+        // 9. JD takeout processing (corresponds to Python lines 640-911)
+        async function processJdData(workbooks, storeData, inventoryData) {
+            log('Processing JD takeout data...', 'info');
             
-            // 标记京东外卖商品
-            const markedKucunData = await markJdGoods(workbooks, kucunData);
+            // Mark JD takeout products
+            const markedInventoryData = await markJdGoods(workbooks, inventoryData);
             
-            // 处理京东外卖模版数据
-            const jdTemplateData = await processJdTemplate(workbooks, storeData, markedKucunData);
+            // Process JD takeout template data
+            const jdTemplateData = await processJdTemplate(workbooks, storeData, markedInventoryData);
             
-            return { markedKucunData, jdTemplateData };
+            return { markedInventoryData, jdTemplateData };
         }
 
-        // 在美得得库存_处理结果中标记京东外卖
-        async function markJdGoods(workbooks, kucunData) {
-            log('标记京东外卖商品...', 'info');
+        // Mark JD takeout in Meidede Inventory_Processed
+        async function markJdGoods(workbooks, inventoryData) {
+            log('Marking JD takeout products...', 'info');
             
-            // 设置Z2单元格标题（红底黑字样式 - 对应Python第653-655行）
-            // 注意：JavaScript版本无法直接设置Excel样式，但数据逻辑完全一致
-            if (kucunData.length > 1) {
-                kucunData[1][25] = '京东外卖'; // Z列（第26列）
+            // Set Z2 cell header (red background black text style - corresponds to Python lines 653-655)
+            // Note: JavaScript version cannot directly set Excel styles, but data logic is identical
+            if (inventoryData.length > 1) {
+                inventoryData[1][25] = 'JD Takeout'; // Column Z (26th column)
             }
             
-            // 获取京东外卖商品库F列的所有条码
+            // Get all barcodes from JD takeout product catalog column F
             const jdGoodsData = getSheetData(workbooks['jd-goods']);
             const jdBarcodesSet = new Set();
             for (let i = 1; i < jdGoodsData.length; i++) {
-                const val = jdGoodsData[i][5]; // F列是第6列（索引5）
+                const val = jdGoodsData[i][5]; // Column F is 6th column (index 5)
                 if (val !== null && val !== undefined && String(val).trim() !== '') {
                     jdBarcodesSet.add(String(val).trim());
                 }
             }
             
-            log(`从京东外卖商品库F列读取到 ${jdBarcodesSet.size} 个条码`, 'info');
+            log(`Read ${jdBarcodesSet.size} barcodes from JD takeout product catalog column F`, 'info');
             
-            // 对比美得得库存_处理结果D列和京东外卖商品库F列
+            // Compare Meidede Inventory_Processed column D with JD takeout product catalog column F
             let matchCount = 0;
-            for (let i = 1; i < kucunData.length; i++) {
-                const dVal = kucunData[i][3]; // D列（商品条码）
-                const zCell = kucunData[i][25]; // Z列（第26列）
+            for (let i = 1; i < inventoryData.length; i++) {
+                const dVal = inventoryData[i][3]; // Column D (product barcode)
+                const zCell = inventoryData[i][25]; // Column Z (26th column)
                 
                 if (dVal !== null && jdBarcodesSet.has(String(dVal).trim())) {
-                    kucunData[i][25] = '有'; // Z列标记"有"
+                    inventoryData[i][25] = 'Yes'; // Column Z: mark "Yes"
                     matchCount++;
                 }
             }
             
-            log(`已完成京东外卖标记：在Z列标记了 ${matchCount} 个重合商品`, 'success');
-            return kucunData;
+            log(`JD takeout marking complete: marked ${matchCount} matching products in column Z`, 'success');
+            return inventoryData;
         }
 
-        // 处理京东外卖模版数据
-        async function processJdTemplate(workbooks, storeData, kucunData) {
-            log('处理京东外卖模版数据...', 'info');
+        // Process JD takeout template data
+        async function processJdTemplate(workbooks, storeData, inventoryData) {
+            log('Processing JD takeout template data...', 'info');
             
-            // 读取门店名I列的京东门店编号
+            // Read JD store IDs from Store Names column I
             const jdStoreIds = [];
-            for (let i = 1; i < storeData.mendianData.length; i++) {
-                const val = storeData.mendianData[i][8]; // I列是第9列（索引8）
+            for (let i = 1; i < storeData.storeTable.length; i++) {
+                const val = storeData.storeTable[i][8]; // Column I is 9th column (index 8)
                 if (val !== null && val !== undefined && String(val).trim() !== '') {
                     jdStoreIds.push(String(val).trim());
                 }
             }
             
-            log(`从门店名I列读取到 ${jdStoreIds.length} 个京东门店编号`, 'info');
+            log(`Read ${jdStoreIds.length} JD store IDs from Store Names column I`, 'info');
             
-            // 读取京东外卖商品库F列数据（从第2行开始）
+            // Read JD takeout product catalog column F data (from row 2)
             const jdGoodsData = getSheetData(workbooks['jd-goods']);
             const jdSkuData = [];
             for (let i = 1; i < jdGoodsData.length; i++) {
-                const val = jdGoodsData[i][5]; // F列是第6列（索引5）
+                const val = jdGoodsData[i][5]; // Column F is 6th column (index 5)
                 if (val !== null && val !== undefined && String(val).trim() !== '') {
                     jdSkuData.push(String(val).trim());
                 }
             }
             
-            log(`从京东外卖商品库F列读取到 ${jdSkuData.length} 条有效商家SKU数据`, 'info');
+            log(`Read ${jdSkuData.length} valid merchant SKU records from JD takeout product catalog column F`, 'info');
             
-            // 获取京东外卖模版数据并扩展
+            // Get JD takeout template data and extend
             const jdTemplateData = getSheetData(workbooks['jd-template']);
             
-            // 实现笛卡尔积：每个门店编号对应所有商家SKU
-            let rowIdx = 2; // 从第2行开始（索引1）
+            // Implement Cartesian product: each store ID maps to all merchant SKUs
+            let rowIdx = 2; // Start from row 2 (index 1)
             const totalRows = jdStoreIds.length * jdSkuData.length;
-            log(`将生成 ${totalRows} 行数据（${jdStoreIds.length}个门店 × ${jdSkuData.length}个SKU）`, 'info');
+            log(`Generating ${totalRows} rows of data (${jdStoreIds.length} stores × ${jdSkuData.length} SKUs)`, 'info');
             
             for (const storeId of jdStoreIds) {
                 for (const skuValue of jdSkuData) {
-                    // 确保行存在
+                    // Ensure row exists
                     while (jdTemplateData.length <= rowIdx - 1) {
-                        jdTemplateData.push(new Array(10).fill('')); // 扩展足够的列
+                        jdTemplateData.push(new Array(10).fill('')); // Extend with enough columns
                     }
                     
-                    // A列填写门店编号
+                    // Column A: store ID
                     jdTemplateData[rowIdx - 1][0] = storeId;
-                    // C列填写商家SKU
+                    // Column C: merchant SKU
                     jdTemplateData[rowIdx - 1][2] = skuValue;
                     rowIdx++;
                 }
             }
             
-            log(`已完成京东外卖模版数据生成：${totalRows} 行`, 'success');
+            log(`JD takeout template data generation complete: ${totalRows} rows`, 'success');
             
-            // 同步美得得库存到京东外卖模版E列
-            await syncJdInventory(workbooks, jdTemplateData, storeData, kucunData);
+            // Sync Meidede inventory to JD takeout template column E
+            await syncJdInventory(workbooks, jdTemplateData, storeData, inventoryData);
             
             return jdTemplateData;
         }
 
-        // 同步美得得库存到京东外卖模版E列
-        async function syncJdInventory(workbooks, jdTemplateData, storeData, kucunData) {
-            log('同步库存数据到京东外卖模版...', 'info');
+        // Sync Meidede inventory to JD takeout template column E
+        async function syncJdInventory(workbooks, jdTemplateData, storeData, inventoryData) {
+            log('Syncing inventory data to JD takeout template...', 'info');
             
-            // 1. 建立"门店名"B列（美得得店名）到I列（京东门店编号）的映射
-            const mendianNameToJdId = {};
-            for (let i = 1; i < storeData.mendianData.length; i++) {
-                const mendianName = storeData.mendianData[i][1]; // B列（美得得店名）
-                const jdId = storeData.mendianData[i][8];        // I列（京东门店编号）
-                if (mendianName !== null && jdId !== null && 
-                    String(mendianName).trim() !== '' && String(jdId).trim() !== '') {
-                    mendianNameToJdId[String(mendianName).trim()] = String(jdId).trim();
+            // 1. Build mapping from "Store Names" column B (Meidede store name) to column I (JD store ID)
+            const storeNameToJdId = {};
+            for (let i = 1; i < storeData.storeTable.length; i++) {
+                const storeName = storeData.storeTable[i][1]; // Column B (Meidede store name)
+                const jdId = storeData.storeTable[i][8];        // Column I (JD store ID)
+                if (storeName !== null && jdId !== null && 
+                    String(storeName).trim() !== '' && String(jdId).trim() !== '') {
+                    storeNameToJdId[String(storeName).trim()] = String(jdId).trim();
                 }
             }
             
-            log(`建立了 ${Object.keys(mendianNameToJdId).length} 个门店名称到京东门店编号的映射`, 'info');
+            log(`Built ${Object.keys(storeNameToJdId).length} store name to JD store ID mappings`, 'info');
             
-            // 2. 建立"美得得库存"中(仓库名称, 商品条码)到库存数量的映射（对应Python第749-758行）
-            // 注意：Python版本使用的是原始库存文件，不是处理后的文件
-            const originalKucunData = getSheetData(workbooks['kucun']);
-            const kucunInventoryMap = {};
+            // 2. Build mapping from "Meidede Inventory" (warehouse name, product barcode) to inventory quantity (corresponds to Python lines 749-758)
+            // Note: Python version uses the original inventory file, not the processed file
+            const originalKucunData = getSheetData(workbooks['inventory']);
+            const inventoryQuantityMap = {};
             for (let i = 1; i < originalKucunData.length; i++) {
-                const warehouseName = originalKucunData[i][0];  // A列（仓库名称）
-                const barcode = originalKucunData[i][3];         // D列（商品条码）
-                const stockCount = originalKucunData[i][7];      // H列（库存总数）
+                const warehouseName = originalKucunData[i][0];  // Column A (warehouse name)
+                const barcode = originalKucunData[i][3];         // Column D (product barcode)
+                const stockCount = originalKucunData[i][7];      // Column H (total inventory)
                 if (warehouseName !== null && barcode !== null) {
                     const key = `${String(warehouseName).trim()}_${String(barcode).trim()}`;
-                    kucunInventoryMap[key] = stockCount !== null ? stockCount : 0;
+                    inventoryQuantityMap[key] = stockCount !== null ? stockCount : 0;
                 }
             }
             
-            log(`建立了 ${Object.keys(kucunInventoryMap).length} 个库存数据映射`, 'info');
+            log(`Built ${Object.keys(inventoryQuantityMap).length} inventory data mappings`, 'info');
             
-            // 3. 遍历京东外卖模版，匹配并同步库存数据
+            // 3. Iterate JD takeout template, match and sync inventory data
             let matchedCount = 0;
-            for (let i = 1; i < jdTemplateData.length; i++) { // 从第2行开始
-                const jdStoreId = jdTemplateData[i][0]; // A列（京东门店编号）
-                const jdSku = jdTemplateData[i][2];     // C列（商家SKU）
+            for (let i = 1; i < jdTemplateData.length; i++) { // Start from row 2
+                const jdStoreId = jdTemplateData[i][0]; // Column A (JD store ID)
+                const jdSku = jdTemplateData[i][2];     // Column C (merchant SKU)
                 
                 if (jdStoreId === null || jdSku === null) {
                     continue;
                 }
                 
-                // 根据京东门店编号找到美得得店名
-                let mendianName = null;
-                for (const [name, id] of Object.entries(mendianNameToJdId)) {
+                // Find Meidede store name by JD store ID
+                let storeNameFound = null;
+                for (const [name, id] of Object.entries(storeNameToJdId)) {
                     if (String(id).trim() === String(jdStoreId).trim()) {
-                        mendianName = name;
+                        storeNameFound = name;
                         break;
                     }
                 }
                 
-                if (!mendianName) {
+                if (!storeNameFound) {
                     continue;
                 }
                 
-                // 根据美得得店名和SKU查找库存
-                const key = `${mendianName}_${String(jdSku).trim()}`;
-                const inventory = kucunInventoryMap[key];
+                // Find inventory by Meidede store name and SKU
+                const key = `${storeNameFound}_${String(jdSku).trim()}`;
+                const inventory = inventoryQuantityMap[key];
                 
                 if (inventory !== undefined) {
-                    // 填写E列（现货库存）
-                    jdTemplateData[i][4] = inventory; // E列是第5列（索引4）
+                    // Fill column E (stock on hand)
+                    jdTemplateData[i][4] = inventory; // Column E is 5th column (index 4)
                     matchedCount++;
                 }
             }
             
-            log(`已完成库存数据同步：匹配到 ${matchedCount} 条库存记录`, 'success');
+            log(`Inventory data sync complete: matched ${matchedCount} inventory records`, 'success');
             
-            // 4. 为没有库存数据的行填写"0"
+            // 4. Fill "0" for rows with no inventory data
             let zeroFillCount = 0;
-            for (let i = 1; i < jdTemplateData.length; i++) { // 从第2行开始
-                const eVal = jdTemplateData[i][4]; // E列（现货库存）
+            for (let i = 1; i < jdTemplateData.length; i++) { // Start from row 2
+                const eVal = jdTemplateData[i][4]; // Column E (stock on hand)
                 if (eVal === null || eVal === undefined || String(eVal).trim() === '') {
-                    jdTemplateData[i][4] = 0; // E列填写0
+                    jdTemplateData[i][4] = 0; // Column E: fill 0
                     zeroFillCount++;
                 }
             }
-            log(`为 ${zeroFillCount} 行没有库存数据的记录填写了0`, 'success');
+            log(`Filled 0 for ${zeroFillCount} rows with no inventory data`, 'success');
             
-            // 5. 根据E列库存值在D列填写销售状态
+            // 5. Fill sales status in column D based on column E inventory value
             let availableCount = 0;
             let unavailableCount = 0;
-            for (let i = 1; i < jdTemplateData.length; i++) { // 从第2行开始
-                const eVal = jdTemplateData[i][4]; // E列（现货库存）
-                const dCell = jdTemplateData[i][3]; // D列（销售状态）
+            for (let i = 1; i < jdTemplateData.length; i++) { // Start from row 2
+                const eVal = jdTemplateData[i][4]; // Column E (stock on hand)
+                const dCell = jdTemplateData[i][3]; // Column D (sales status)
                 
                 try {
-                    // 尝试转换为数字进行比较
+                    // Try to convert to number for comparison
                     if (eVal !== null && eVal !== undefined && String(eVal).trim() !== '') {
                         const stockValue = parseFloat(String(eVal).trim());
                         if (stockValue > 0) {
-                            jdTemplateData[i][3] = '可售';
+                            jdTemplateData[i][3] = 'Available';
                             availableCount++;
                         } else {
-                            jdTemplateData[i][3] = '不可售';
+                            jdTemplateData[i][3] = 'Unavailable';
                             unavailableCount++;
                         }
                     } else {
-                        jdTemplateData[i][3] = '不可售';
+                        jdTemplateData[i][3] = 'Unavailable';
                         unavailableCount++;
                     }
                 } catch (e) {
-                    // 如果无法转换为数字，默认为不可售
-                    jdTemplateData[i][3] = '不可售';
+                    // If cannot convert to number, default to Unavailable
+                    jdTemplateData[i][3] = 'Unavailable';
                     unavailableCount++;
                 }
             }
             
-            log(`销售状态设置：${availableCount} 行设为'可售'，${unavailableCount} 行设为'不可售'`, 'success');
+            log(`Sales status set: ${availableCount} rows set to 'Available', ${unavailableCount} rows set to 'Unavailable'`, 'success');
         }
 
 
-        // 检查并分割饿了么文件
+        // Check and split Eleme file
         async function checkAndSplitElemeFile(elemeData) {
             const totalRows = elemeData.length;
-            log(`饿了么表格总行数：${totalRows}`, 'info');
+            log(`Eleme table total rows: ${totalRows}`, 'info');
             
             if (totalRows > 60000) {
-                log('饿了么表格超过60000行，开始分割...', 'info');
+                log('Eleme table exceeds 60000 rows, splitting...', 'info');
                 
-                // 创建第二个表格（包含60001行及以后的数据）
+                // Create second table (rows 60001 and after)
                 const eleme2Data = [];
                 
-                // 复制前两行表头到新表格
+                // Copy first two header rows to new table
                 if (totalRows >= 2) {
                     eleme2Data.push([...elemeData[0]]);
                     eleme2Data.push([...elemeData[1]]);
                 }
                 
-                // 将第60001行及以后的数据移动到新表格
+                // Move rows 60001 and after to new table
                 for (let i = 60001; i <= totalRows; i++) {
                     if (elemeData[i - 1]) {
                         eleme2Data.push([...elemeData[i - 1]]);
                     }
                 }
                 
-                // 删除原表格中60001行及以后的内容
+                // Remove rows 60001 and after from original table
                 elemeData.splice(60000);
                 
-                // 添加第二个文件到下载列表
-                const eleme2Workbook = createWorkbook(eleme2Data, '饿了么数据2');
-                addDownloadItem('饿了么_处理后_2.xlsx', eleme2Workbook);
+                // Add second file to download list
+                const eleme2Workbook = createWorkbook(eleme2Data, 'Eleme Data 2');
+                addDownloadItem('Eleme_Processed_2.xlsx', eleme2Workbook);
                 
-                log(`已成功分割饿了么表格：原表格保留前60000行，第二个表格包含剩余${totalRows - 60000}行`, 'success');
+                log(`Successfully split Eleme table: original keeps first 60000 rows, second table contains remaining ${totalRows - 60000} rows`, 'success');
             } else {
-                log('饿了么表格行数未超过60000行，无需分割', 'info');
+                log('Eleme table does not exceed 60000 rows, no split needed', 'info');
             }
         }
 
-        // 检查并分割京东外卖模版文件
+        // Check and split JD takeout template file
         async function checkAndSplitJdTemplateFile(jdTemplateData) {
             const totalRows = jdTemplateData.length;
-            log(`京东外卖模版总行数：${totalRows}`, 'info');
+            log(`JD takeout template total rows: ${totalRows}`, 'info');
             
             if (totalRows > 100000) {
-                log('京东外卖模版超过100000行，开始分割...', 'info');
+                log('JD takeout template exceeds 100000 rows, splitting...', 'info');
                 
-                // 创建第二个表格（包含100001行及以后的数据）
+                // Create second table (rows 100001 and after)
                 const jdTemplate2Data = [];
                 
-                // 复制第一行表头到新表格
+                // Copy first header row to new table
                 if (totalRows >= 1) {
                     jdTemplate2Data.push([...jdTemplateData[0]]);
                 }
                 
-                // 将第100001行及以后的数据移动到新表格
+                // Move rows 100001 and after to new table
                 for (let i = 100001; i <= totalRows; i++) {
                     if (jdTemplateData[i - 1]) {
                         jdTemplate2Data.push([...jdTemplateData[i - 1]]);
                     }
                 }
                 
-                // 删除原表格中100001行及以后的内容
+                // Remove rows 100001 and after from original table
                 jdTemplateData.splice(100000);
                 
-                // 添加第二个文件到下载列表
-                const jdTemplate2Workbook = createWorkbook(jdTemplate2Data, '京东外卖模版2');
-                addDownloadItem('京东外卖模版_处理后_2.xlsx', jdTemplate2Workbook);
+                // Add second file to download list
+                const jdTemplate2Workbook = createWorkbook(jdTemplate2Data, 'JD Takeout Template 2');
+                addDownloadItem('JD_Takeout_Template_Processed_2.xlsx', jdTemplate2Workbook);
                 
-                log(`已成功分割京东外卖模版：原表格保留前100000行，第二个表格包含剩余${totalRows - 100000}行`, 'success');
+                log(`Successfully split JD takeout template: original keeps first 100000 rows, second table contains remaining ${totalRows - 100000} rows`, 'success');
             } else {
-                log('京东外卖模版行数未超过100000行，无需分割', 'info');
+                log('JD takeout template does not exceed 100000 rows, no split needed', 'info');
             }
         }
 
-        // 生成结果文件 - 完整版本，按照Python逻辑生成所有文件
+        // Generate result files - full version, generates all files per Python logic
         async function generateResultFiles(workbooks, processedData) {
-            log('生成结果文件...', 'info');
+            log('Generating result files...', 'info');
             
-            // 1. 门店与商品售卖信息_处理后.xlsx
+            // 1. Store_Product_Sales_Info_Processed.xlsx
             if (processedData.dstData) {
-                const dstWorkbook = createWorkbook(processedData.dstData, '门店商品信息');
-                addDownloadItem('门店与商品售卖信息_处理后.xlsx', dstWorkbook);
-                log('已生成门店与商品售卖信息_处理后.xlsx', 'success');
+                const dstWorkbook = createWorkbook(processedData.dstData, 'Store Product Info');
+                addDownloadItem('Store_Product_Sales_Info_Processed.xlsx', dstWorkbook);
+                log('Generated Store_Product_Sales_Info_Processed.xlsx', 'success');
             }
             
-            // 2. 美得得库存_处理结果.xlsx
-            if (processedData.kucunData) {
-                const kucunWorkbook = createWorkbook(processedData.kucunData, '美得得库存');
-                addDownloadItem('美得得库存_处理结果.xlsx', kucunWorkbook);
-                log('已生成美得得库存_处理结果.xlsx', 'success');
+            // 2. Meidede_Inventory_Processed.xlsx
+            if (processedData.inventoryData) {
+                const inventoryWorkbook = createWorkbook(processedData.inventoryData, 'Meidede Inventory');
+                addDownloadItem('Meidede_Inventory_Processed.xlsx', inventoryWorkbook);
+                log('Generated Meidede_Inventory_Processed.xlsx', 'success');
             }
             
-            // 3. 饿了么_处理后.xlsx
+            // 3. Eleme_Processed.xlsx
             if (processedData.elemeData) {
-                const elemeWorkbook = createWorkbook(processedData.elemeData, '饿了么数据');
-                addDownloadItem('饿了么_处理后.xlsx', elemeWorkbook);
-                log('已生成饿了么_处理后.xlsx', 'success');
+                const elemeWorkbook = createWorkbook(processedData.elemeData, 'Eleme Data');
+                addDownloadItem('Eleme_Processed.xlsx', elemeWorkbook);
+                log('Generated Eleme_Processed.xlsx', 'success');
             }
             
-            // 4. 抖音提货券_处理后.xlsx
+            // 4. Douyin_Pickup_Voucher_Processed.xlsx
             if (processedData.douyinData) {
-                const douyinWorkbook = createWorkbook(processedData.douyinData, '抖音提货券');
-                addDownloadItem('抖音提货券_处理后.xlsx', douyinWorkbook);
-                log('已生成抖音提货券_处理后.xlsx', 'success');
+                const douyinWorkbook = createWorkbook(processedData.douyinData, 'Douyin Pickup Voucher');
+                addDownloadItem('Douyin_Pickup_Voucher_Processed.xlsx', douyinWorkbook);
+                log('Generated Douyin_Pickup_Voucher_Processed.xlsx', 'success');
             }
             
-            // 5. 京东外卖模版_处理后.xlsx
+            // 5. JD_Takeout_Template_Processed.xlsx
             if (processedData.jdResult && processedData.jdResult.jdTemplateData) {
-                const jdTemplateWorkbook = createWorkbook(processedData.jdResult.jdTemplateData, '京东外卖模版');
-            addDownloadItem('京东外卖模版_处理后.xlsx', jdTemplateWorkbook);
-                log('已生成京东外卖模版_处理后.xlsx', 'success');
+                const jdTemplateWorkbook = createWorkbook(processedData.jdResult.jdTemplateData, 'JD Takeout Template');
+                addDownloadItem('JD_Takeout_Template_Processed.xlsx', jdTemplateWorkbook);
+                log('Generated JD_Takeout_Template_Processed.xlsx', 'success');
             }
             
-            log('所有结果文件生成完成', 'success');
+            log('All result files generated', 'success');
         }
 
-        // 下载全部文件为ZIP压缩包
+        // Download all files as ZIP archive
         async function downloadAllAsZip() {
             if (Object.keys(processedFiles).length === 0) {
-                alert('没有可下载的文件！');
+                alert('No files to download!');
                 return;
             }
 
-            log('📦 开始创建ZIP压缩包...', 'info');
+            log('📦 Creating ZIP archive...', 'info');
             
             try {
-                // 创建ZIP实例
+                // Create ZIP instance
                 const zip = new JSZip();
                 const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
                 
-                // 为每个文件添加到ZIP中
+                // Add each file to ZIP
             Object.keys(processedFiles).forEach(filename => {
                     const workbook = processedFiles[filename];
                     const wbout = XLSX.write(workbook, {bookType: 'xlsx', type: 'array'});
                     zip.file(filename, wbout);
-                    log(`📁 添加文件到压缩包: ${filename}`, 'info');
+                    log(`📁 Adding file to archive: ${filename}`, 'info');
                 });
                 
-                log('📦 正在生成ZIP文件...', 'info');
+                log('📦 Generating ZIP file...', 'info');
                 
-                // 生成ZIP文件
+                // Generate ZIP file
                 const zipBlob = await zip.generateAsync({type: 'blob'});
                 
-                // 创建下载链接
+                // Create download link
                 const url = URL.createObjectURL(zipBlob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `Excel处理结果_${timestamp}.zip`;
+                a.download = `Excel_Processing_Results_${timestamp}.zip`;
                 a.click();
                 
-                // 清理URL对象
+                // Revoke URL object
                 URL.revokeObjectURL(url);
                 
-                log('✅ ZIP压缩包下载完成！', 'success');
-                log(`📦 文件包含 ${Object.keys(processedFiles).length} 个Excel文件`, 'info');
+                log('✅ ZIP archive download complete!', 'success');
+                log(`📦 Archive contains ${Object.keys(processedFiles).length} Excel files`, 'info');
                 
             } catch (error) {
-                log(`❌ 创建ZIP文件失败: ${error.message}`, 'error');
-                console.error('ZIP创建错误:', error);
+                log(`❌ Failed to create ZIP file: ${error.message}`, 'error');
+                console.error('ZIP creation error:', error);
             }
         }
 
-        // 页面加载完成后的初始化
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            log('📊 赫眉线上库存处理工具已就绪', 'success');
-            log('请按顺序上传所需的9个Excel文件', 'info');
+            log('📊 Inventory processing tool is ready', 'success');
+            log('Please select a folder containing the 9 required Excel files', 'info');
         });
     </script>
 </body>
