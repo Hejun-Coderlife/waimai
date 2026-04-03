@@ -706,11 +706,45 @@
             }
             
             log('已完成门店ID与商品条码的批量粘贴', 'success');
-            
-            // 添加价格匹配逻辑：通过D列条形码匹配美得得库存G列价格到K列
-            await matchPricesFromKucun(workbooks, dstData);
+
+            // Fill K column from "3meituanstore" (mtwm-goods) column O, matched by barcode.
+            await fillDstKFromMtwmGoodsO(workbooks, dstData);
             
             return dstData;
+        }
+
+        // Fill "门店与商品售卖信息" K5+ from "3meituanstore"(mtwm-goods) column O, matched by barcode.
+        // Match key: dst D column barcode <-> mtwm-goods B column barcode.
+        async function fillDstKFromMtwmGoodsO(workbooks, dstData) {
+            log('开始填写门店与商品售卖信息K列（来自美团商品库O列）...', 'info');
+
+            const mtwmGoods = getSheetData(workbooks['mtwm-goods']);
+            const barcodeToO = {};
+
+            // mtwm-goods: B column is barcode (index 1), O column is index 14 (A=0).
+            for (let i = 1; i < mtwmGoods.length; i++) {
+                const barcodeRaw = mtwmGoods[i][1];
+                const oRaw = mtwmGoods[i][14];
+                const barcode = barcodeRaw === null || barcodeRaw === undefined ? '' : String(barcodeRaw).trim();
+                if (!barcode) continue;
+                if (oRaw === null || oRaw === undefined || String(oRaw).trim() === '') continue;
+                barcodeToO[barcode] = oRaw;
+            }
+
+            let filledCount = 0;
+            for (let i = 4; i < dstData.length; i++) { // from row 5
+                const dstBarcodeRaw = dstData[i][3]; // D column barcode
+                const dstBarcode = dstBarcodeRaw === null || dstBarcodeRaw === undefined ? '' : String(dstBarcodeRaw).trim();
+                if (!dstBarcode) continue;
+
+                const val = barcodeToO[dstBarcode];
+                if (val === null || val === undefined || String(val).trim() === '') continue;
+
+                dstData[i][10] = val; // K column
+                filledCount++;
+            }
+
+            log(`已完成K列填写：成功填写 ${filledCount} 条记录`, 'success');
         }
 
         // 价格匹配函数：通过D列条形码匹配美得得库存G列价格到K列
@@ -1604,6 +1638,9 @@
                 // Force "L5 and below" (inventory quantity) to be numeric.
                 // L column is index 11 (0-based), row 5 is index 4 (0-based).
                 forceNumberColumn(dstSheet, 11, 4, null, '0');
+                // Force "K5 and below" to be numeric (from mtwm-goods column O).
+                // K column is index 10 (0-based), row 5 is index 4 (0-based).
+                forceNumberColumn(dstSheet, 10, 4, null, '0.00');
                 addDownloadItem('门店与商品售卖信息_处理后.xlsx', dstWorkbook);
                 log('已生成门店与商品售卖信息_处理后.xlsx', 'success');
             }
